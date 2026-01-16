@@ -1,7 +1,6 @@
 import { getWorks } from "./lib/get-works";
 import WorksPage from "./components/Works/WorksPage";
 
-export const runtime = "edge";
 export const revalidate = 60;
 
 export default async function Home() {
