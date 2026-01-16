@@ -58,15 +58,6 @@ export default function WorksPage({
 
           <WorksGrid works={filteredWorks} />
         </section>
-
-        {/* About / Contact（今は箱だけ。内容は後でOK） */}
-        <section id="about" className={styles.section}>
-          <h2 className={styles.h2}>About</h2>
-        </section>
-
-        <section id="contact" className={styles.section}>
-          <h2 className={styles.h2}>Contact</h2>
-        </section>
       </main>
     </div>
   );

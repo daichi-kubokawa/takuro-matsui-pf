@@ -11,7 +11,7 @@ export default function SideNav() {
     <aside className={styles.nav}>
       {/* SP header */}
       <div className={styles.hamburgerRow}>
-        <div className={styles.brand}>Takuro Matsui</div>
+        <div className={styles.brand}>PF</div>
 
         <button
           className={styles.hamburgerBtn}
@@ -29,9 +29,7 @@ export default function SideNav() {
       </div>
 
       {/* PC brand */}
-      <div className={`${styles.brand} ${styles.desktopOnly}`}>
-        Takuro Matsui
-      </div>
+      <div className={`${styles.brand} ${styles.desktopOnly}`}>PF</div>
 
       {/* Drawer: SPは open のときだけ表示 / PCは常時表示 */}
       <div className={`${styles.drawer} ${open ? styles.drawerOpen : ""}`}>

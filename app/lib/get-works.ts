@@ -14,12 +14,11 @@ export async function getWorks(): Promise<Work[]> {
     queries: {
       limit: 100,
       orders: "-createdAt",
-      // fieldsを絞りたい場合はここで:
-      // fields: "id,title,coverImage,gallery,description,tags,featured,client",
+      // fieldsを絞るなら layout も必ず入れる
+      // fields: "id,title,coverImage,gallery,description,tags,featured,client,layout",
     },
   });
 
-  // microCMS側の未入力が混ざっても落ちないように軽く整形
   return (res.contents ?? []).map((w) => ({
     id: w.id,
     title: w.title ?? "",
@@ -29,5 +28,8 @@ export async function getWorks(): Promise<Work[]> {
     tags: w.tags ?? [],
     featured: !!w.featured,
     client: w.client ?? "",
+
+    // ✅ 追加（未入力は normal 扱い）
+    layout: (w.layout ?? "normal") as "normal" | "wide",
   }));
 }

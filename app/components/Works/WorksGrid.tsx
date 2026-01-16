@@ -1,23 +1,25 @@
 "use client";
 
+import Link from "next/link";
 import styles from "./WorksGrid.module.css";
 import type { Work } from "../../types/work";
 
-function isWide(work: Work) {
-  const img = work.coverImage;
-  if (!img?.width || !img?.height) return false;
-  return img.width / img.height >= 1.45;
+function isWideLayout(layout: Work["layout"]) {
+  if (!layout) return false;
+  if (Array.isArray(layout)) return layout.includes("wide");
+  return layout === "wide";
 }
 
 export default function WorksGrid({ works }: { works: Work[] }) {
   return (
     <section className={styles.grid} id="works">
       {works.map((work) => {
-        const wide = isWide(work);
+        const wide = isWideLayout(work.layout);
 
         return (
-          <article
+          <Link
             key={work.id}
+            href={`/works/${work.id}`}
             className={`${styles.card} ${wide ? styles.wide : ""}`}
           >
             <img
@@ -26,7 +28,7 @@ export default function WorksGrid({ works }: { works: Work[] }) {
               alt={work.title}
               loading="lazy"
             />
-          </article>
+          </Link>
         );
       })}
     </section>
