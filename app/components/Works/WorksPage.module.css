@@ -1,0 +1,58 @@
+.shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: sans-serif;
+}
+
+/* 右側 */
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 24px;
+}
+
+/* セクション間隔 */
+.section {
+  padding-bottom: 44px;
+}
+
+/* 見出し（仮） */
+.h2 {
+  margin: 32px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* タグ：作品の上 */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px 0;
+}
+
+.tagBtn {
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 0;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.tagBtnActive {
+  border-color: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* SP：SideNav が上に来るので、shellを縦に */
+@media (max-width: 767px) {
+  .shell {
+    display: block;
+  }
+  .main {
+    padding: 16px;
+  }
+}

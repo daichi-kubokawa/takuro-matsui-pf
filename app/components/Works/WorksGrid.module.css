@@ -1,0 +1,48 @@
+.grid {
+  display: grid;
+  gap: 32px; /* 余白ちょい増やす（作品感） */
+  padding: 32px;
+
+  /* SP：2列 */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  /* ワイド混在でも詰める */
+  grid-auto-flow: dense;
+}
+
+/* SPでも横長は2列ぶち抜き（＝1段使う） */
+.wide {
+  grid-column: 1 / -1;
+}
+
+/* タブレット */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .wide {
+    grid-column: span 2;
+  }
+}
+
+/* PC：最大4列（これ以上増えない） */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .wide {
+    grid-column: span 2;
+  }
+}
+
+.card {
+  background: transparent;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
