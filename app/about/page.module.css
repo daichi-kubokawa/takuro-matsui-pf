@@ -1,0 +1,42 @@
+.main {
+  min-height: 100vh;
+  padding: 28px 24px;
+}
+
+.inner {
+  max-width: 860px;
+}
+
+.h1 {
+  font-size: 28px;
+  margin: 0 0 18px 0;
+  letter-spacing: 0.02em;
+}
+
+.h2 {
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.block {
+  margin-top: 22px;
+}
+
+.p {
+  margin: 0;
+  line-height: 1.9;
+  font-size: 15px;
+  opacity: 0.95;
+}
+
+.mail {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  opacity: 0.95;
+}
