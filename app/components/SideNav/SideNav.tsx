@@ -1,18 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import styles from "./SideNav.module.css";
 
-export default function SideNav() {
+export default function SideNav({
+  brandName,
+  contactEmail,
+}: {
+  brandName: string;
+  contactEmail: string;
+}) {
   const [open, setOpen] = useState(false);
-  const close = () => setOpen(false);
 
   return (
-    <aside className={styles.nav}>
-      {/* SP header */}
+    <nav className={styles.nav} aria-label="Primary">
       <div className={styles.hamburgerRow}>
-        <div className={styles.brand}>PF</div>
-
+        <div className={styles.brand}>{brandName}</div>
         <button
           className={styles.hamburgerBtn}
           type="button"
@@ -28,23 +32,33 @@ export default function SideNav() {
         </button>
       </div>
 
-      {/* PC brand */}
-      <div className={`${styles.brand} ${styles.desktopOnly}`}>PF</div>
+      <div className={`${styles.brand} ${styles.desktopOnly}`}>{brandName}</div>
 
-      {/* Drawer: SPは open のときだけ表示 / PCは常時表示 */}
-      <div className={`${styles.drawer} ${open ? styles.drawerOpen : ""}`}>
-        <nav className={styles.links} aria-label="Primary">
-          <a className={styles.link} href="/#works" onClick={close}>
+      <div className={`${styles.drawer} ${open ? styles.open : ""}`}>
+        <div className={styles.links}>
+          <Link
+            className={styles.link}
+            href="/#works"
+            onClick={() => setOpen(false)}
+          >
             Works
-          </a>
-          <a className={styles.link} href="/about" onClick={close}>
+          </Link>
+          <Link
+            className={styles.link}
+            href="/about"
+            onClick={() => setOpen(false)}
+          >
             About
-          </a>
-          <a className={styles.link} href="/#contact" onClick={close}>
+          </Link>
+          <a
+            className={styles.link}
+            href={`mailto:${contactEmail}`}
+            onClick={() => setOpen(false)}
+          >
             Contact
           </a>
-        </nav>
+        </div>
       </div>
-    </aside>
+    </nav>
   );
 }

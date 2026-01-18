@@ -1,9 +1,5 @@
 .nav {
-  position: sticky;
-  top: 0;
-  height: 100vh;
   padding: 18px 16px;
-  border-right: 1px solid var(--line);
   background: var(--bg);
 }
 
@@ -11,18 +7,6 @@
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.02em;
-}
-
-.hamburgerRow {
-  display: none;
-}
-
-.desktopOnly {
-  display: block;
-}
-
-.drawer {
-  display: block;
 }
 
 .links {
@@ -34,9 +18,16 @@
 .link {
   font-size: 16px;
   font-weight: 500;
-  opacity: 0.95;
   text-decoration: none;
-  color: inherit;
+  opacity: 0.95;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.hamburgerRow {
+  display: none;
 }
 
 .hamburgerBtn {
@@ -47,15 +38,11 @@
   cursor: pointer;
 }
 
-/* --- SP --- */
-@media (max-width: 767px) {
-  .nav {
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--line);
-    z-index: 20;
-  }
+.drawer {
+  display: block;
+}
 
+@media (max-width: 767px) {
   .hamburgerRow {
     display: flex;
     align-items: center;
@@ -63,20 +50,20 @@
     gap: 12px;
   }
 
-  /* SPではPC用ブランドは消す */
   .desktopOnly {
-    display: none !important;
+    display: none;
   }
 
-  /* ★ここが確実に効くように強制 */
   .drawer {
-    display: none !important;
+    display: none;
     margin-top: 12px;
     padding-bottom: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
   }
 
-  .drawerOpen {
-    display: block !important;
+  .open {
+    display: block;
   }
 
   .links {

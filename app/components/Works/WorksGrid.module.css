@@ -1,8 +1,6 @@
 .grid {
   display: grid;
-  gap: 32px;
-  padding: 32px;
-
+  gap: 28px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-auto-flow: dense;
 }
@@ -19,18 +17,23 @@
   }
 }
 
-/* grid直下の要素 */
 .card {
   display: block;
-  background: transparent;
-}
-
-.wide {
-  grid-column: span 2;
+  text-decoration: none;
 }
 
 .image {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.fallback {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.wide {
+  grid-column: span 2 !important;
 }

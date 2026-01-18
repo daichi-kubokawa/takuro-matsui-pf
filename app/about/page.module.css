@@ -1,42 +1,59 @@
 .main {
-  min-height: 100vh;
-  padding: 28px 24px;
+  padding: 64px 16px;
 }
 
 .inner {
-  max-width: 860px;
+  max-width: 840px;
+  margin: 0 auto;
 }
 
 .h1 {
-  font-size: 28px;
-  margin: 0 0 18px 0;
-  letter-spacing: 0.02em;
+  font-size: 40px;
+  line-height: 1.1;
+  margin: 0 0 24px;
 }
 
 .h2 {
-  font-size: 14px;
-  margin: 0 0 10px 0;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  opacity: 0.75;
+  font-size: 18px;
+  margin: 0 0 12px;
 }
 
 .block {
-  margin-top: 22px;
+  margin-top: 32px;
 }
 
 .p {
-  margin: 0;
-  line-height: 1.9;
-  font-size: 15px;
-  opacity: 0.95;
+  margin: 0 0 12px;
+  line-height: 1.8;
 }
 
 .mail {
   display: inline-block;
-  margin-top: 6px;
-  font-size: 15px;
+  margin-top: 8px;
   text-decoration: underline;
-  text-underline-offset: 4px;
-  opacity: 0.95;
+}
+
+.figure {
+  margin: 24px 0 0;
+}
+
+.profileImage {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  display: block;
+}
+
+.pre {
+  white-space: pre-wrap;
+  margin: 0;
+  line-height: 1.8;
+}
+
+.rich {
+  line-height: 1.9;
+}
+
+.rich a {
+  text-decoration: underline;
 }

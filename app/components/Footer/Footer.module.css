@@ -1,0 +1,31 @@
+.footer {
+  padding: 48px 16px;
+  border-top: 1px solid var(--line);
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.sns {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 12px;
+}
+
+.sns a {
+  text-decoration: underline;
+}

@@ -1,17 +1,69 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import type { Metadata } from "next";
+import { getSettings } from "./lib/cms/settings";
+import SideNav from "./components/SideNav/SideNav";
+import Footer from "./components/Footer/Footer";
 
-export const metadata: Metadata = {
-  title: "Takuro Matsui | Portfolio",
-  description: "Portfolio site",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const s = await getSettings();
+  const isNoIndex = s.robotsIndex === "noindex";
 
-export default function RootLayout({
+  return {
+    title: {
+      default: s.siteTitle,
+      template: `%s | ${s.brandName}`,
+    },
+    description: s.siteDescription,
+    robots: {
+      index: !isNoIndex,
+      follow: !isNoIndex,
+      googleBot: {
+        index: !isNoIndex,
+        follow: !isNoIndex,
+      },
+    },
+    openGraph: {
+      title: s.siteTitle,
+      description: s.siteDescription,
+      type: "website",
+      images: s.ogImage?.url ? [{ url: s.ogImage.url }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: s.siteTitle,
+      description: s.siteDescription,
+      images: s.ogImage?.url ? [s.ogImage.url] : undefined,
+    },
+    icons: s.favicon?.url
+      ? {
+          icon: [{ url: s.favicon.url }],
+          shortcut: [{ url: s.favicon.url }],
+        }
+      : undefined,
+  };
+}
+
+export default async function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: {
+  children: React.ReactNode;
+}) {
+  const s = await getSettings();
+
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body>
+        <div className="layout">
+          <aside className="sidebar">
+            <SideNav brandName={s.brandName} contactEmail={s.contactEmail} />
+          </aside>
+
+          <div className="content">
+            {children}
+            <Footer />
+          </div>
+        </div>
+      </body>
     </html>
   );
 }

@@ -1,36 +1,40 @@
-.shell {
-  display: flex;
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: sans-serif;
-}
-
-/* 右側 */
 .main {
-  flex: 1;
-  min-width: 0;
-  padding: 24px;
+  padding: 64px 16px;
 }
 
-/* セクション間隔 */
-.section {
-  padding-bottom: 44px;
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-/* 見出し（仮） */
-.h2 {
-  margin: 32px 0 0;
-  font-size: 16px;
-  font-weight: 600;
+.headerRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 18px;
 }
 
-/* タグ：作品の上 */
-.tags {
+.h1 {
+  font-size: 40px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.clearBtn {
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 0;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.tagsBar {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 0 0 18px 0;
+  margin: 0 0 24px 0;
 }
 
 .tagBtn {
@@ -45,14 +49,4 @@
 .tagBtnActive {
   border-color: rgba(0, 0, 0, 0.25);
   background: rgba(0, 0, 0, 0.04);
-}
-
-/* SP：SideNav が上に来るので、shellを縦に */
-@media (max-width: 767px) {
-  .shell {
-    display: block;
-  }
-  .main {
-    padding: 16px;
-  }
 }
