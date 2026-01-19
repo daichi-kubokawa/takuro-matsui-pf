@@ -4,8 +4,6 @@ import { getSettings } from "./lib/cms/settings";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 
-export const runtime = "edge";
-
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings();
 
