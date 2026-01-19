@@ -1,11 +1,14 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { getSettings } from "./lib/cms/settings";
-import SideNav from "./components/SideNav/SideNav";
+import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+
+export const runtime = "edge";
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings();
+
   const isNoIndex = s.robotsIndex === "noindex";
 
   return {
@@ -43,25 +46,18 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const s = await getSettings();
-
   return (
     <html lang="ja">
       <body>
-        <div className="layout">
-          <aside className="sidebar">
-            <SideNav brandName={s.brandName} contactEmail={s.contactEmail} />
-          </aside>
-
-          <div className="content">
-            {children}
-            <Footer />
-          </div>
+        <Header />
+        <div className="content">
+          {children}
+          <Footer />
         </div>
       </body>
     </html>

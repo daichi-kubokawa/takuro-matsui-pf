@@ -1,5 +1,5 @@
 import { microcmsClient } from "../microcms";
-import type { About } from "../../types/work";
+import type { About } from "../../types/about";
 
 export async function getAbout(): Promise<About> {
   const data = await microcmsClient.getObject<About>({
