@@ -10,10 +10,6 @@
   gap: 12px;
 }
 
-.card {
-  width: 100%;
-}
-
 .link {
   display: block;
   text-decoration: none;
@@ -24,21 +20,68 @@
   height: auto;
   display: block;
   transform: translateZ(0);
-  transition: opacity 120ms ease;
-}
-
-.link:hover .img {
-  opacity: 0.92;
 }
 
 .card {
   width: 100%;
   transform: translateY(0);
-  transition: transform 160ms ease;
 }
 
-.card:hover {
-  transform: translateY(-4px);
+/* hover が使えるデバイスだけ */
+@media (hover: hover) and (pointer: fine) {
+  .img {
+    transition: opacity 120ms ease;
+  }
+
+  .link:hover .img {
+    opacity: 0.92;
+  }
+
+  .card {
+    transition:
+      transform 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+  }
+}
+
+@media (hover: none) {
+  .card:hover {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .link:hover .img {
+    opacity: 1;
+  }
+}
+
+/* ここから「ふわっ」 */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease;
+  will-change: opacity, transform;
+}
+
+.inView {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 動きを減らしたい人向け */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 @media (max-width: 767px) {

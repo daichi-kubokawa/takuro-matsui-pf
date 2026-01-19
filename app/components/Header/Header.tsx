@@ -4,7 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./Header.module.css";
 
-export default function Header() {
+type Props = {
+  brandName: string;
+  contactEmail: string;
+  contactEmailLabel?: string;
+};
+
+export default function Header({ brandName, contactEmail }: Props) {
   const [hidden, setHidden] = useState(false);
   const lastYRef = useRef(0);
 
@@ -38,19 +44,22 @@ export default function Header() {
       <div className={styles.inner}>
         <div className={styles.brand}>
           <Link href="/" className={styles.brandLink}>
-            BlandName
+            {brandName}
           </Link>
         </div>
 
         <nav className={styles.nav}>
           <Link className={styles.navLink} href="/works">
-            Works
+            WORKS
+          </Link>
+          <Link className={styles.navLink} href="/original">
+            ORIGINAL
           </Link>
           <Link className={styles.navLink} href="/about">
-            About
+            ABOUT
           </Link>
-          <a className={styles.navLink} href="#contact">
-            Contact
+          <a className={styles.navLink} href={`mailto:${contactEmail}`}>
+            CONTACT
           </a>
         </nav>
       </div>

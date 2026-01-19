@@ -1,5 +1,6 @@
 import styles from "./Footer.module.css";
-import { getSettings } from "../../lib/cms/settings";
+import { getSettings } from "@/app/lib/cms/settings";
+
 type SocialLink = { label: string; url: string };
 
 export default async function Footer() {
@@ -8,7 +9,10 @@ export default async function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
-        <p className={styles.note}>{s.footerNote}</p>
+        <p className={styles.note}>
+          <span>&copy; </span>
+          {s.footerNote}
+        </p>
 
         {(s.socialLinks?.length ?? 0) > 0 && (
           <ul className={styles.sns}>

@@ -4,9 +4,6 @@
   --fg: #111111;
   --muted: rgba(0, 0, 0, 0.6);
   --line: rgba(0, 0, 0, 0.12);
-
-  /* ページ左右余白（画面が広がっても「途中で止まる」問題は主に max-width が原因）
-     ここは余白だけなのでOK */
   --page-pad: 24px;
 }
 
@@ -32,12 +29,10 @@ a {
   color: inherit;
 }
 
-/* ヘッダー下の全体コンテンツ。layout.tsxで <div className="content"> を使ってる前提 */
 .content {
   padding: 18px 16px 48px;
 }
 
-/* 画面が広い時は余白を少し広げる（任意） */
 @media (min-width: 1024px) {
   .content {
     padding: 20px 24px 60px;

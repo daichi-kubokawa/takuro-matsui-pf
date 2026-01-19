@@ -9,13 +9,14 @@ import WorksTiles from "./WorksTiles";
 type Props = {
   works: Work[];
   tags: Tag[];
+  title?: string;
 };
 
 function getWorkTagSlugs(w: Work): string[] {
   return (w.tags ?? []).map((t) => t.slug).filter(Boolean);
 }
 
-export default function WorksPage({ works, tags }: Props) {
+export default function WorksPage({ works, tags, title = "Works" }: Props) {
   const [active, setActive] = useState<string>("all");
 
   const tagOptions = useMemo(() => {
@@ -32,7 +33,7 @@ export default function WorksPage({ works, tags }: Props) {
   return (
     <main className={styles.main}>
       <div className={styles.inner}>
-        <h1 className={styles.h1}>Works</h1>
+        <h1 className={styles.h1}>{title}</h1>
 
         <div className={styles.tagsBar}>
           <button

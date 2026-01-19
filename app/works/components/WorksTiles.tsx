@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./WorksTiles.module.css";
 import type { Work } from "@/app/types/work";
 
@@ -25,6 +25,7 @@ function safeRatio(w: Work): number {
 
 export default function WorksTiles({ works }: Props) {
   const [cols, setCols] = useState<number>(2);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     const update = () => setCols(getColumnsCount(window.innerWidth));
@@ -32,6 +33,30 @@ export default function WorksTiles({ works }: Props) {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+
+  useEffect(() => {
+    if (observerRef.current) observerRef.current.disconnect();
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add(styles.inView);
+          observerRef.current?.unobserve(entry.target);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.15,
+      },
+    );
+
+    const nodes = document.querySelectorAll(`.${styles.reveal}`);
+    nodes.forEach((n) => observerRef.current?.observe(n));
+
+    return () => observerRef.current?.disconnect();
+  }, [works, cols]);
 
   const columns = useMemo(() => {
     const buckets: Work[][] = Array.from({ length: cols }, () => []);
@@ -62,7 +87,7 @@ export default function WorksTiles({ works }: Props) {
       {columns.map((col, idx) => (
         <div key={idx} className={styles.col}>
           {col.map((w) => (
-            <article key={w.id} className={styles.card}>
+            <article key={w.id} className={`${styles.card} ${styles.reveal}`}>
               <Link className={styles.link} href={`/works/${w.id}`}>
                 <img
                   className={styles.img}

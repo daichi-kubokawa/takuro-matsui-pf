@@ -22,7 +22,7 @@ export default async function AboutPage() {
         {about.profileImage?.url && (
           <figure className={styles.figure}>
             <img
-              className={styles.profileImage}
+              className={`${styles.profileImage} ${styles.reveal}`}
               src={about.profileImage.url}
               alt={about.profileImageAlt ?? ""}
               loading="lazy"

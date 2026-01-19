@@ -44,15 +44,21 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const s = await getSettings();
+
   return (
     <html lang="ja">
       <body>
-        <Header />
+        <Header
+          brandName={s.brandName}
+          contactEmail={s.contactEmail}
+          contactEmailLabel={s.contactEmailLabel}
+        />
         <div className="content">
           {children}
           <Footer />
