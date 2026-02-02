@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ベースリセット */
 body {
   margin: 0;
+}
+
+/*
+  横余白の共通ルール
+  - 最小: 16px (SP)
+  - 1440px付近: 約48px
+  - それ以上: 少しずつ広がる（最大72px）
+*/
+.container-x {
+  padding-left: clamp(16px, 3.3vw, 72px);
+  padding-right: clamp(16px, 3.3vw, 72px);
 }

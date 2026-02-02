@@ -6,14 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 
 type NavItem = { label: string; href?: string; mailto?: string };
 
-const NAV: NavItem[] = [
-  { label: "ALL", href: "/" },
-  { label: "WORKS", href: "/works" },
-  { label: "ORIGINAL", href: "/original" },
-  { label: "ABOUT", href: "/about" },
-  { label: "CONTACT", mailto: "mailto:contact@example.com" }, // ← 後で差し替え
-];
-
 function normalize(p: string) {
   if (p !== "/" && p.endsWith("/")) return p.slice(0, -1);
   return p;
@@ -22,25 +14,45 @@ function normalize(p: string) {
 function activeLabel(pathname: string) {
   const p = normalize(pathname);
   if (p.startsWith("/works/")) return "WORKS";
-  return NAV.find((n) => n.href === p)?.label ?? "ALL";
+  return (
+    [
+      { label: "ALL", href: "/" },
+      { label: "WORKS", href: "/works" },
+      { label: "ORIGINAL", href: "/original" },
+      { label: "ABOUT", href: "/about" },
+    ].find((n) => n.href === p)?.label ?? "ALL"
+  );
 }
 
-export default function Header() {
+export default function Header({
+  siteTitle,
+  contactEmail,
+}: {
+  siteTitle: string;
+  contactEmail: string;
+}) {
   const pathname = usePathname();
   const current = useMemo(() => activeLabel(pathname), [pathname]);
   const [open, setOpen] = useState(false);
+
+  const NAV: NavItem[] = [
+    { label: "ALL", href: "/" },
+    { label: "WORKS", href: "/works" },
+    { label: "ORIGINAL", href: "/original" },
+    { label: "ABOUT", href: "/about" },
+    { label: "CONTACT", mailto: `mailto:${contactEmail}` },
+  ];
 
   useEffect(() => setOpen(false), [pathname]);
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-black/10">
-      <div className="mx-auto max-w-5xl px-6 h-14 flex items-center justify-between">
-        {/* 左：サイト名 */}
+      <div className="mx-auto max-w-[1440px] px-4 xl:px-12 h-14 flex items-center justify-between">
         <Link href="/" className="text-xs tracking-wide hover:opacity-70">
-          PORTFOLIO
+          {siteTitle}
         </Link>
 
-        {/* PC ナビ */}
+        {/* PC */}
         <nav className="hidden md:flex items-center gap-6 text-xs">
           {NAV.map((n) =>
             n.mailto ? (
@@ -65,7 +77,7 @@ export default function Header() {
           )}
         </nav>
 
-        {/* SP 右：現在地 + メニュー */}
+        {/* SP */}
         <div className="md:hidden flex items-center gap-3">
           <span className="text-[11px] opacity-60">{current}</span>
           <button
@@ -79,10 +91,9 @@ export default function Header() {
         </div>
       </div>
 
-      {/* SP メニュー */}
       {open && (
         <div className="md:hidden border-t border-black/10 bg-white">
-          <div className="mx-auto max-w-5xl px-6 py-4 flex flex-col gap-3">
+          <div className="mx-auto max-w-[1440px] px-4 xl:px-12 py-4 flex flex-col gap-3">
             {NAV.map((n) =>
               n.mailto ? (
                 <a key={n.label} href={n.mailto} className="text-xs opacity-80">
