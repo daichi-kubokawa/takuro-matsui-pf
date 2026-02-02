@@ -1,8 +1,15 @@
-import { getAllWorks } from "@/app/lib/cms/works";
-import { getTags } from "@/app/lib/cms/tags";
-import WorksPage from "@/app/works/components/WorksPage";
+import WorksGallery from "@/components/WorksGallery";
+import { getTags, getWorksMerged } from "@/lib/microcms";
 
-export default async function HomePage() {
-  const [works, tags] = await Promise.all([getAllWorks(), getTags()]);
-  return <WorksPage works={works} tags={tags} title="ALL" />;
+export default async function Page() {
+  const [{ settings, works }, tags] = await Promise.all([
+    getWorksMerged({}),
+    getTags(),
+  ]);
+
+  return (
+    <main className="mx-auto max-w-5xl px-6 py-14">
+      <WorksGallery works={works} tags={tags} settings={settings} />
+    </main>
+  );
 }

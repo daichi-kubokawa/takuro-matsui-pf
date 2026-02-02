@@ -1,13 +1,14 @@
-import { getAllWorks } from "@/app/lib/cms/works";
-import { getTags } from "@/app/lib/cms/tags";
-import WorksPage from "@/app/works/components/WorksPage";
+import WorksGallery from "@/components/WorksGallery";
+import { getTags, getWorksMerged } from "@/lib/microcms";
 
-export default async function OriginalIndexPage() {
-  const [works, tags] = await Promise.all([getAllWorks(), getTags()]);
-
-  const filtered = (works ?? []).filter(
-    (w) => String(w.kind ?? "").trim() === "original",
+export default async function OriginalPage() {
+  const [{ settings, works }, tags] = await Promise.all([
+    getWorksMerged({ kind: "original" }),
+    getTags(),
+  ]);
+  return (
+    <main className="mx-auto max-w-5xl px-6 py-14">
+      <WorksGallery works={works} tags={tags} settings={settings} />
+    </main>
   );
-
-  return <WorksPage works={filtered} tags={tags} title="ORIGINAL" />;
 }

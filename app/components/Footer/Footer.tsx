@@ -1,31 +1,39 @@
-import styles from "./Footer.module.css";
-import { getSettings } from "@/app/lib/cms/settings";
-
-type SocialLink = { label: string; url: string };
+import { getSettings } from "@/lib/microcms";
 
 export default async function Footer() {
-  const s = await getSettings();
+  try {
+    const s = await getSettings();
 
-  return (
-    <footer className={styles.footer}>
-      <div className={styles.inner}>
-        <p className={styles.note}>
-          <span>&copy; </span>
-          {s.footerNote}
-        </p>
-
-        {(s.socialLinks?.length ?? 0) > 0 && (
-          <ul className={styles.sns}>
-            {s.socialLinks!.map((x: SocialLink) => (
-              <li key={`${x.label}-${x.url}`}>
-                <a href={x.url} target="_blank" rel="noreferrer">
-                  {x.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </footer>
-  );
+    return (
+      <footer className="mt-16 text-center text-sm opacity-60">
+        <div>
+          © {new Date().getFullYear()} {s.siteTitle}
+        </div>
+        <div className="mt-2">
+          <a className="hover:underline" href={`mailto:${s.contactEmail}`}>
+            contact
+          </a>
+          {s.instagramUrl ? (
+            <>
+              {"  /  "}
+              <a
+                className="hover:underline"
+                href={s.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                instagram
+              </a>
+            </>
+          ) : null}
+        </div>
+      </footer>
+    );
+  } catch {
+    return (
+      <footer className="mt-16 text-center text-sm opacity-60">
+        © {new Date().getFullYear()}
+      </footer>
+    );
+  }
 }

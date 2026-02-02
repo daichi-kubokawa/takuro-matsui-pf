@@ -1,74 +1,30 @@
-import styles from "./page.module.css";
-import { getAbout } from "../lib/cms/about";
-import { getSettings } from "../lib/cms/settings";
+import { getAbout, getSettings } from "@/lib/microcms";
 
 export default async function AboutPage() {
   const [about, settings] = await Promise.all([getAbout(), getSettings()]);
-  const mail = settings.contactEmail;
-  const label = settings.contactEmailLabel ?? mail;
 
   return (
-    <main className={styles.main}>
-      <div className={styles.inner}>
-        <h1 className={styles.h1}>{about.title}</h1>
+    <main className="mx-auto max-w-5xl px-6 py-14">
+      <h1 className="text-4xl font-semibold">{about.nameJa}</h1>
+      <p className="mt-2 opacity-70">{about.nameEn}</p>
 
-        {/* 本文（リッチエディタHTML） */}
-        <div
-          className={styles.rich}
-          dangerouslySetInnerHTML={{ __html: about.body }}
-        />
+      <p className="mt-6 leading-7">{about.bioJa}</p>
+      {about.bioEn ? (
+        <p className="mt-4 leading-7 opacity-80">{about.bioEn}</p>
+      ) : null}
 
-        {/* 画像 */}
-        {about.profileImage?.url && (
-          <figure className={styles.figure}>
-            <img
-              className={`${styles.profileImage} ${styles.reveal}`}
-              src={about.profileImage.url}
-              alt={about.profileImageAlt ?? ""}
-              loading="lazy"
-            />
-          </figure>
-        )}
-
-        {/* Clients */}
-        {about.clients && (
-          <section className={styles.block}>
-            <h2 className={styles.h2}>{about.clientsHeading ?? "Clients"}</h2>
-            <pre className={styles.pre}>{about.clients}</pre>
-          </section>
-        )}
-
-        {/* Awards */}
-        {about.awards && (
-          <section className={styles.block}>
-            <h2 className={styles.h2}>{about.awardsHeading ?? "Awards"}</h2>
-            <pre className={styles.pre}>{about.awards}</pre>
-          </section>
-        )}
-
-        {/* Exhibitions */}
-        {about.exhibitions && (
-          <section className={styles.block}>
-            <h2 className={styles.h2}>
-              {about.exhibitionsHeading ?? "Exhibitions"}
-            </h2>
-            <pre className={styles.pre}>{about.exhibitions}</pre>
-          </section>
-        )}
-
-        {/* Contact */}
-        {(about.showContact ?? true) && (
-          <section className={styles.block}>
-            <h2 className={styles.h2}>{about.contactHeading ?? "Contact"}</h2>
-            {about.contactText && (
-              <p className={styles.p}>{about.contactText}</p>
-            )}
-            <a className={styles.mail} href={`mailto:${mail}`}>
-              {label}
-            </a>
-          </section>
-        )}
-      </div>
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold">Contact</h2>
+        <p className="mt-4 text-sm opacity-80">{about.contactTextJa}</p>
+        <div className="mt-3 text-sm">
+          <a
+            className="hover:underline"
+            href={`mailto:${settings.contactEmail}`}
+          >
+            {settings.contactEmail}
+          </a>
+        </div>
+      </section>
     </main>
   );
 }

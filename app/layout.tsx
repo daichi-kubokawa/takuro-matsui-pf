@@ -1,68 +1,39 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { getSettings } from "./lib/cms/settings";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
+import Footer from "@/components/Footer/Footer";
+import { getSettings } from "@/lib/microcms";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const s = await getSettings();
+  try {
+    const s = await getSettings();
 
-  const isNoIndex = s.robotsIndex === "noindex";
-
-  return {
-    title: {
-      default: s.siteTitle,
-      template: `%s | ${s.brandName}`,
-    },
-    description: s.siteDescription,
-    robots: {
-      index: !isNoIndex,
-      follow: !isNoIndex,
-      googleBot: {
-        index: !isNoIndex,
-        follow: !isNoIndex,
-      },
-    },
-    openGraph: {
+    return {
       title: s.siteTitle,
-      description: s.siteDescription,
-      type: "website",
-      images: s.ogImage?.url ? [{ url: s.ogImage.url }] : undefined,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: s.siteTitle,
-      description: s.siteDescription,
-      images: s.ogImage?.url ? [s.ogImage.url] : undefined,
-    },
-    icons: s.favicon?.url
-      ? {
-          icon: [{ url: s.favicon.url }],
-          shortcut: [{ url: s.favicon.url }],
-        }
-      : undefined,
-  };
+      description: s.metaDescription ?? s.siteSubtitle,
+      icons: s.favicon?.url ? { icon: s.favicon.url } : undefined,
+      openGraph: s.ogImage?.url
+        ? {
+            title: s.siteTitle,
+            images: [{ url: s.ogImage.url }],
+          }
+        : undefined,
+    };
+  } catch {
+    // Settingsが取れない間も開発できるように最低限を返す
+    return { title: "Portfolio" };
+  }
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const s = await getSettings();
-
   return (
-    <html lang="ja">
+    <html lang="en">
       <body>
-        <Header
-          brandName={s.brandName}
-          contactEmail={s.contactEmail}
-          contactEmailLabel={s.contactEmailLabel}
-        />
-        <div className="content">
-          {children}
-          <Footer />
-        </div>
+        {children}
+        <Footer />
       </body>
     </html>
   );
