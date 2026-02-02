@@ -1,28 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import Footer from "@/components/Footer/Footer";
-import { getSettings } from "@/lib/microcms";
-
-export async function generateMetadata(): Promise<Metadata> {
-  try {
-    const s = await getSettings();
-
-    return {
-      title: s.siteTitle,
-      description: s.metaDescription ?? s.siteSubtitle,
-      icons: s.favicon?.url ? { icon: s.favicon.url } : undefined,
-      openGraph: s.ogImage?.url
-        ? {
-            title: s.siteTitle,
-            images: [{ url: s.ogImage.url }],
-          }
-        : undefined,
-    };
-  } catch {
-    // Settingsが取れない間も開発できるように最低限を返す
-    return { title: "Portfolio" };
-  }
-}
+import Header from "./components/Header/Header";
 
 export default function RootLayout({
   children,
@@ -30,10 +7,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="ja">
+      <body style={{ margin: 0 }}>
+        <Header />
         {children}
-        <Footer />
       </body>
     </html>
   );

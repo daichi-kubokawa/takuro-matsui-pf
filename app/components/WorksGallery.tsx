@@ -1,75 +1,71 @@
-"use client";
-
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import type { Tag, Work, Settings } from "@/lib/microcms";
+import type { Tag, Work } from "../lib/microcms/types";
 
 export default function WorksGallery({
   works,
   tags,
-  settings,
+  basePath,
 }: {
   works: Work[];
   tags: Tag[];
-  settings: Settings;
+  basePath: "/works" | "/original";
 }) {
-  const [selected, setSelected] = useState<string[]>([]);
-
-  const filtered = useMemo(() => {
-    if (selected.length === 0) return works;
-
-    const mode = settings.filterMode;
-    return works.filter((w) => {
-      const slugs = (w.tags ?? []).map((t) => t.slug).filter(Boolean);
-      return mode === "or"
-        ? selected.some((s) => slugs.includes(s))
-        : selected.every((s) => slugs.includes(s));
-    });
-  }, [works, selected, settings.filterMode]);
-
-  const toggle = (slug: string) =>
-    setSelected((p) =>
-      p.includes(slug) ? p.filter((x) => x !== slug) : [...p, slug],
-    );
-  const clear = () => setSelected([]);
-
+  // いまは「表示できる」を最優先。フィルタは後で足す。
   return (
     <div>
-      <div className="flex items-center gap-3 mb-6">
-        <div className="text-sm opacity-60">filters :</div>
-        <button
-          onClick={clear}
-          className={`text-sm underline-offset-4 ${selected.length === 0 ? "underline font-medium" : "hover:underline"}`}
-        >
-          All
-        </button>
-        {tags.map((t) => {
-          const active = selected.includes(t.slug);
-          return (
-            <button
-              key={t.id}
-              onClick={() => toggle(t.slug)}
-              className={`text-sm underline-offset-4 ${active ? "underline font-medium" : "hover:underline"}`}
-            >
-              {t.name}
-            </button>
-          );
-        })}
+      {/* タグ表示（とりあえず表示だけ） */}
+      <div
+        style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}
+      >
+        {tags.map((t) => (
+          <span
+            key={t.id}
+            style={{
+              fontSize: 12,
+              opacity: 0.7,
+              border: "1px solid rgba(0,0,0,0.15)",
+              padding: "4px 8px",
+              borderRadius: 999,
+            }}
+          >
+            {t.name}
+          </span>
+        ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-8">
-        {filtered.map((w) => (
-          <Link key={w.id} href={`/works/${w.id}`} className="block">
+      {/* 作品グリッド */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+          gap: 12,
+        }}
+      >
+        {works.map((w) => (
+          <Link
+            key={w.id}
+            href={`${basePath}/${w.id}`}
+            style={{
+              display: "block",
+              border: "1px solid rgba(0,0,0,0.08)",
+            }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={w.thumbnail.url}
+              src={w.thumbnail?.url ?? w.images?.[0]?.url ?? ""}
               alt={w.title ?? "work"}
-              className="w-full h-auto"
-              loading="lazy"
+              style={{ width: "100%", height: "auto", display: "block" }}
             />
           </Link>
         ))}
       </div>
+
+      {/* 件数が0のとき */}
+      {works.length === 0 ? (
+        <p style={{ marginTop: 16, fontSize: 13, opacity: 0.7 }}>
+          作品がありません（microCMSの公開状態 / isPublic / kind を確認）
+        </p>
+      ) : null}
     </div>
   );
 }
