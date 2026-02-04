@@ -9,11 +9,16 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.7",
+    "@mui/material": "^7.3.7",
     "@opennextjs/cloudflare": "^1.16.2",
     "microcms-js-sdk": "^3.2.0",
     "next": "^16.1.6",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-masonry-css": "^1.0.16"
   },
   "devDependencies": {
     "@types/node": "^20",

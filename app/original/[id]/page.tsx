@@ -1,25 +1,24 @@
 import Link from "next/link";
 import { getWorkDetail } from "../../lib/microcms/works";
 
-export default async function WorkDetailPage({
+export default async function OriginalDetailPage({
   params,
   searchParams,
 }: {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ from?: string }>;
 }) {
-  // Next.js 15 / 16 の sync-dynamic-apis 対応
   const { id } = await params;
   const sp = await searchParams;
 
   const work = await getWorkDetail(id);
 
   // ✅ from があるならそれを使う
-  // ✅ 無い場合は /works をフォールバック（ALLに戻さない）
+  // ✅ 無い場合は /original をフォールバック（ALLに戻さない）
   const backTo =
     sp?.from && typeof sp.from === "string" && sp.from.trim().length > 0
       ? sp.from
-      : "/works";
+      : "/original";
 
   const images = work.images?.length
     ? work.images
@@ -37,21 +36,8 @@ export default async function WorkDetailPage({
         ← Back
       </Link>
 
-      {/* Title & Credit（WORKSのみ表示） */}
-      <div className="mb-12 space-y-4">
-        {work.title && (
-          <h1 className="text-[18px] font-medium">{work.title}</h1>
-        )}
+      {/* ORIGINALはタイトル・クレジットを出さない */}
 
-        {work.credit && (
-          <div
-            className="text-[16px] md:text-[18px] opacity-70 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: work.credit }}
-          />
-        )}
-      </div>
-
-      {/* Images */}
       <div className="space-y-6">
         {images.map((img, i) => (
           // eslint-disable-next-line @next/next/no-img-element

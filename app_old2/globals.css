@@ -15,6 +15,9 @@ body {
 
 /* 左右余白：SP390で16px / PC1440で48px を clamp で自動スケール */
 .container-x {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: clamp(16px, 3.333vw, 48px);
   padding-right: clamp(16px, 3.333vw, 48px);
 }

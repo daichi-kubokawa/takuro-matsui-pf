@@ -2,48 +2,18 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { Tag, Work } from "../lib/microcms/types";
-
-type LinkMode = "byKind" | "fixedWorks" | "fixedOriginal";
-
-function normalizeKind(kind: unknown): "works" | "original" | "unknown" {
-  if (typeof kind === "string") {
-    const k = kind.trim().toLowerCase();
-    if (k === "works") return "works";
-    if (k === "original") return "original";
-    return "unknown";
-  }
-  if (Array.isArray(kind)) {
-    const arr = kind
-      .filter((v) => typeof v === "string")
-      .map((v) => v.trim().toLowerCase());
-    if (arr.includes("original")) return "original";
-    if (arr.includes("works")) return "works";
-    return "unknown";
-  }
-  return "unknown";
-}
 
 export default function WorksGallery({
   works,
   tags,
-  linkMode = "byKind",
+  linkMode,
 }: {
   works: Work[];
   tags: Tag[];
-  linkMode?: LinkMode; // ★ page.tsx 側で渡してなくても壊れない
+  linkMode: "byKind" | "fixedWorks" | "fixedOriginal";
 }) {
-  const pathname = usePathname();
-
-  // 一覧ページ（/ , /works , /original）以外でも変にならないように保険
-  const from = useMemo(() => {
-    if (pathname === "/works") return "/works";
-    if (pathname === "/original") return "/original";
-    return "/"; // default: ALL
-  }, [pathname]);
-
   const ALL_ID = "__all__";
   const [activeTagId, setActiveTagId] = useState<string>(ALL_ID);
 
@@ -59,22 +29,11 @@ export default function WorksGallery({
   }, [works, activeTagId]);
 
   function hrefFor(w: Work) {
-    // 1) 遷移先ベース（/works or /original）を決める
-    let basePath: "/works" | "/original" = "/works";
-
-    if (linkMode === "fixedWorks") basePath = "/works";
-    else if (linkMode === "fixedOriginal") basePath = "/original";
-    else {
-      // byKind：kind を正規化して判断（ここが ALL→全部/works を潰すポイント）
-      const k = normalizeKind((w as any).kind);
-      basePath = k === "original" ? "/original" : "/works";
-    }
-
-    // 2) from（戻り先）を必ず付与（ここが Back で /works に戻る問題を潰すポイント）
-    const qs = new URLSearchParams();
-    qs.set("from", from);
-
-    return `${basePath}/${w.id}?${qs.toString()}`;
+    if (linkMode === "fixedWorks") return `/works/${w.id}`;
+    if (linkMode === "fixedOriginal") return `/original/${w.id}`;
+    return (w as any).kind === "original"
+      ? `/original/${w.id}`
+      : `/works/${w.id}`;
   }
 
   return (
@@ -101,10 +60,10 @@ export default function WorksGallery({
         </div>
       </div>
 
-      {/* Masonry */}
-      <div className="masonry-grid">
+      {/* ✅ Pinterest風：CSSで段組み固定 */}
+      <div className="masonry">
         {filteredWorks.map((w) => {
-          const thumb = w.thumbnail?.url ?? w.images?.[0]?.url;
+          const thumb = w.thumbnail?.url ?? w.images?.[0]?.url ?? "";
           if (!thumb) return null;
 
           return (
