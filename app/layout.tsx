@@ -4,6 +4,7 @@ import { Inter, Noto_Sans_JP } from "next/font/google";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { getSettings } from "./lib/microcms/settings";
+import { Suspense } from "react";
 
 import "./globals.css";
 
@@ -38,10 +39,12 @@ export default async function RootLayout({
       <body className="min-h-screen bg-white text-neutral-900 antialiased">
         <div id="top" />
 
-        <Header
-          siteTitle={siteTitle}
-          contactEmail={settings.contactEmail ?? null}
-        />
+        <Suspense fallback={null}>
+          <Header
+            siteTitle={siteTitle}
+            contactEmail={settings.contactEmail ?? null}
+          />
+        </Suspense>
 
         {children}
 
