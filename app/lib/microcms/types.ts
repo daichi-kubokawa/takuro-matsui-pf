@@ -1,14 +1,16 @@
 // app/lib/microcms/types.ts
-export type MicroCMSImage = {
-  url: string;
-  width?: number;
-  height?: number;
+
+export type MicroCMSListResponse<T> = {
+  contents: T[];
+  totalCount: number;
+  offset: number;
+  limit: number;
 };
 
 export type Tag = {
   id: string;
   name: string;
-  slug?: string;
+  slug: string;
   order?: number;
   isActive?: boolean;
 };
@@ -20,8 +22,8 @@ export type Work = {
   kind: "works" | "original";
   tags?: Tag[];
   year?: number;
-  thumbnail?: MicroCMSImage;
-  images?: MicroCMSImage[];
+  thumbnail: { url: string; width?: number; height?: number };
+  images: { url: string; width?: number; height?: number }[];
   description?: string;
   searchText?: string;
   isPublic?: boolean;
@@ -36,7 +38,7 @@ export type About = {
   id: string;
   nameJa: string;
   nameEn: string;
-  portrait?: MicroCMSImage;
+  portrait?: { url: string; width?: number; height?: number };
   bioJa: string;
   bioEn?: string;
   awards?: { year: number; title: string; url?: string }[];
@@ -55,6 +57,9 @@ export type Settings = {
   contactEmail: string;
   instagramUrl?: string;
 
+  // ✅ 追加：Footerで参照しているので型に足す
+  copyrightText?: string;
+
   worksSortMode: "newest" | "random" | "manual";
   pinnedBehavior: "alwaysTop" | "sortModeOnly";
   itemsPerPage?: number;
@@ -63,6 +68,5 @@ export type Settings = {
   filterMode: "or" | "and";
 
   metaDescription?: string;
-  ogImage?: MicroCMSImage;
-  copyrightText?: string;
+  ogImage?: { url: string; width?: number; height?: number };
 };

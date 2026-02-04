@@ -24,7 +24,10 @@ export default async function Footer() {
       <BackToTopButton />
 
       <div className="px-4 sm:px-6 text-center text-xs sm:text-sm text-neutral-500">
-        <div>&copy; {copyrightText}</div>
+        <div>
+          <span>&copy; </span>
+          {copyrightText}
+        </div>
 
         <div className="mt-3 flex items-center justify-center gap-3">
           {contactHref ? (
