@@ -1,6 +1,6 @@
 // app/lib/microcms/client.ts
 import "server-only";
-
+export type { MicroCMSListResponse } from "./types";
 const SERVICE_DOMAIN = process.env.MICROCMS_SERVICE_DOMAIN;
 const API_KEY = process.env.MICROCMS_API_KEY;
 
