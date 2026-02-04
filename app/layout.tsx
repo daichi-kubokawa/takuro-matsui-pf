@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_JP } from "next/font/google";
-
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { getSettings } from "./lib/microcms/settings";
