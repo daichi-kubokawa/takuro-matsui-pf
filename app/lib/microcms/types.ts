@@ -1,29 +1,27 @@
-export type MicroCMSListResponse<T> = {
-  contents: T[];
-  totalCount: number;
-  offset: number;
-  limit: number;
+// app/lib/microcms/types.ts
+export type MicroCMSImage = {
+  url: string;
+  width?: number;
+  height?: number;
 };
 
 export type Tag = {
   id: string;
   name: string;
-  slug: string;
+  slug?: string;
   order?: number;
   isActive?: boolean;
 };
 
-export type ImageField = { url: string; width?: number; height?: number };
-
 export type Work = {
   id: string;
   title?: string;
-  credit?: string;
+  credit?: string; // rich text => HTML string
   kind: "works" | "original";
   tags?: Tag[];
   year?: number;
-  thumbnail: ImageField;
-  images: ImageField[];
+  thumbnail?: MicroCMSImage;
+  images?: MicroCMSImage[];
   description?: string;
   searchText?: string;
   isPublic?: boolean;
@@ -38,7 +36,7 @@ export type About = {
   id: string;
   nameJa: string;
   nameEn: string;
-  portrait?: ImageField;
+  portrait?: MicroCMSImage;
   bioJa: string;
   bioEn?: string;
   awards?: { year: number; title: string; url?: string }[];
@@ -53,17 +51,18 @@ export type Settings = {
   siteTitle: string;
   siteSubtitle?: string;
   defaultLanguage: "en" | "ja";
+
   contactEmail: string;
   instagramUrl?: string;
 
   worksSortMode: "newest" | "random" | "manual";
   pinnedBehavior: "alwaysTop" | "sortModeOnly";
   itemsPerPage?: number;
-  manualPickIds?: string;
+  manualPickIds?: string; // newline separated work ids
 
   filterMode: "or" | "and";
 
   metaDescription?: string;
-  ogImage?: ImageField;
-  favicon?: ImageField;
+  ogImage?: MicroCMSImage;
+  copyrightText?: string;
 };
