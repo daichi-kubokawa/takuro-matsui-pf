@@ -32,7 +32,7 @@ function isActive(pathname: string, href: string) {
 function navClass(active: boolean) {
   return [
     "transition-opacity hover:opacity-60",
-    active ? "font-semibold underline underline-offset-4" : "font-normal",
+    active ? "font-bold underline underline-offset-4" : "font-normal",
   ].join(" ");
 }
 
@@ -88,13 +88,16 @@ export default function Header({ siteTitle, contactEmail }: Props) {
         isVisible ? "translate-y-0" : "-translate-y-full",
       ].join(" ")}
     >
-      <div className="flex items-center justify-between px-4 py-6 sm:px-6">
-        <Link href="/" className="text-sm tracking-wide sm:text-base">
+      <div className="flex items-center justify-between px-4 py-6 lg:px-6">
+        <Link
+          href="/"
+          className="text-[20px] tracking-wide font-bold lg:text-[22px]"
+        >
           {siteTitle}
         </Link>
 
         {/* PC Navigation */}
-        <nav className="hidden items-center gap-6 text-xs tracking-wide sm:flex sm:text-sm">
+        <nav className="hidden items-center gap-6 text-xs tracking-wide lg:flex lg:text-[18px]">
           <Link href="/" className={navClass(isActive(pathname, "/"))}>
             ALL
           </Link>
@@ -135,7 +138,7 @@ export default function Header({ siteTitle, contactEmail }: Props) {
         {/* SP Menu Button */}
         <button
           type="button"
-          className="inline-flex items-center justify-center sm:hidden"
+          className="inline-flex items-center justify-center lg:hidden"
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((prev) => !prev)}
@@ -145,12 +148,12 @@ export default function Header({ siteTitle, contactEmail }: Props) {
       </div>
       {/* SP Overlay Menu */}
       {isOpen ? (
-        <div className="fixed inset-0 z-50 bg-black/10 backdrop-blur-[2px] sm:hidden">
+        <div className="fixed inset-0 z-50 bg-black/10 backdrop-blur-[2px] lg:hidden">
           <div className="min-h-screen bg-white/85">
             <div className="flex items-center justify-between px-4 py-6">
               <Link
                 href="/"
-                className="text-sm tracking-wide"
+                className="text-[20px] font-bold tracking-wide"
                 onClick={() => setIsOpen(false)}
               >
                 {siteTitle}

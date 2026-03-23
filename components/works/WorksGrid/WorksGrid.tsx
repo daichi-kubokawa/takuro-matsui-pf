@@ -13,8 +13,8 @@ type Props = {
 
 const breakpointColumnsObj = {
   default: 4,
-  1280: 3,
-  768: 2,
+  1279: 3,
+  767: 2,
 };
 
 export default function WorksGrid({ works }: Props) {
@@ -35,7 +35,6 @@ export default function WorksGrid({ works }: Props) {
 
   return (
     <section className={styles.root}>
-      {/* SP: 左右振り分け2カラム */}
       <div className={styles.spGrid}>
         <div className={styles.spColumn}>
           {leftColumnWorks.map((work) => (
@@ -54,7 +53,6 @@ export default function WorksGrid({ works }: Props) {
         </div>
       </div>
 
-      {/* Tablet以上: Masonry */}
       <div className={styles.pcMasonry}>
         <Masonry
           breakpointCols={breakpointColumnsObj}
