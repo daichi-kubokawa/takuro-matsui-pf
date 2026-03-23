@@ -1,0 +1,65 @@
+.root {
+  width: 100%;
+}
+
+/* SP: 左右振り分け2カラム */
+.spGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.spColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.spItem {
+  min-width: 0;
+}
+
+/* Tablet以上: Masonry */
+.pcMasonry {
+  display: none;
+}
+
+.masonryGrid {
+  display: flex;
+  margin-left: -24px;
+  width: auto;
+}
+
+.masonryColumn {
+  padding-left: 24px;
+  background-clip: padding-box;
+}
+
+.item {
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .spGrid {
+    display: none;
+  }
+
+  .pcMasonry {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  .masonryGrid {
+    margin-left: -16px;
+  }
+
+  .masonryColumn {
+    padding-left: 16px;
+  }
+
+  .item {
+    margin-bottom: 16px;
+  }
+}

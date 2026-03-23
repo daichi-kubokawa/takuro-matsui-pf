@@ -1,0 +1,19 @@
+.list {
+  margin: 0;
+  padding-left: 24px;
+}
+
+.item {
+  font-size: clamp(18px, 2vw, 20px);
+  line-height: 1.8;
+  color: #3b3b3d;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
