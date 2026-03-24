@@ -1,19 +1,39 @@
 .root {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.main {
+  min-width: 0;
+  order: 2;
+}
+
+.side {
   width: 100%;
+  order: 1;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.08;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
 }
 
 .contactText {
-  margin: 0;
-  font-size: clamp(18px, 2vw, 20px);
-  line-height: 1.8;
-  color: #2f2f31;
-  max-width: 34ch;
+  margin-bottom: 4px;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
 .email {
-  margin-top: 10px;
-  font-size: clamp(18px, 2vw, 20px);
-  line-height: 1.8;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .link {
@@ -23,4 +43,36 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .root {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(320px, 31.25vw, 450px);
+    gap: 96px;
+    align-items: start;
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+
+  .main {
+    order: 1;
+    width: 100%;
+  }
+
+  .side {
+    order: 2;
+    width: 100%;
+    justify-self: end;
+  }
+
+  .imageWrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .contactText,
+  .email {
+    font-size: 18px;
+  }
 }

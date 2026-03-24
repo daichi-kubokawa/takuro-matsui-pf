@@ -1,5 +1,6 @@
 import type { Work } from "@/lib/microcms/types";
 import BackButton from "@/components/common/BackButton/BackButton";
+import WorkGallery from "@/components/works/WorkGallery/WorkGallery";
 import styles from "./WorkDetail.module.css";
 
 type Props = {
@@ -16,6 +17,16 @@ export default function WorkDetail({ work, backHref }: Props) {
 
   const displayRole = work.roleJa || work.role;
   const roleFontClass = work.roleJa ? "font-ja" : "font-en";
+
+  const galleryImages =
+    work.images && work.images.length > 0
+      ? work.images.map((image, index) => ({
+          src: image.url,
+          alt: `${displayTitle} ${index + 1}`,
+        }))
+      : work.thumbnail?.url
+        ? [{ src: work.thumbnail.url, alt: displayTitle }]
+        : [];
 
   return (
     <article className={styles.root}>
@@ -51,29 +62,7 @@ export default function WorkDetail({ work, backHref }: Props) {
         ) : null}
       </header>
 
-      {work.images && work.images.length > 0 ? (
-        <div className={styles.gallery}>
-          {work.images.map((image, index) => (
-            <div key={`${image.url}-${index}`} className={styles.imageWrap}>
-              <img
-                src={image.url}
-                alt={displayTitle}
-                className={styles.image}
-              />
-            </div>
-          ))}
-        </div>
-      ) : work.thumbnail?.url ? (
-        <div className={styles.gallery}>
-          <div className={styles.imageWrap}>
-            <img
-              src={work.thumbnail.url}
-              alt={displayTitle}
-              className={styles.image}
-            />
-          </div>
-        </div>
-      ) : null}
+      {galleryImages.length > 0 ? <WorkGallery images={galleryImages} /> : null}
 
       <div className={styles.backArea}>
         <BackButton fallbackHref={backHref} />

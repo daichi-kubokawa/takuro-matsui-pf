@@ -1,12 +1,19 @@
 .list {
   margin: 0;
-  padding-left: 24px;
 }
 
 .item {
-  font-size: clamp(18px, 2vw, 20px);
-  line-height: 1.8;
-  color: #3b3b3d;
+  position: relative;
+  padding-left: 1em;
+  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: -0.06em;
 }
 
 .link {
@@ -16,4 +23,11 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .item {
+    font-size: 18px;
+    line-height: 1.45;
+  }
 }

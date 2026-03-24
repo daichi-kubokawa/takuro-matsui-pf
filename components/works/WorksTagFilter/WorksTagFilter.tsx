@@ -14,6 +14,8 @@ type Props = {
 export default function WorksTagFilter({ tags, activeTag, onChange }: Props) {
   return (
     <div className={styles.root}>
+      <span className={styles.label}>Filters :</span>
+
       <button
         type="button"
         onClick={() => onChange("all")}

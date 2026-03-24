@@ -37,39 +37,21 @@
   margin: 0;
   font-size: clamp(16px, 2vw, 20px);
   line-height: 1.6;
-  color: #3f3f46;
+  color: var(--color-text-secondary);
 }
 
 .separator {
   margin: 0 6px;
   font-size: clamp(16px, 2vw, 20px);
   line-height: 1.6;
-  color: #3f3f46;
+  color: var(--color-text-secondary);
 }
 
 .year {
   margin: 0;
   font-size: 14px;
   line-height: 1.6;
-  color: #52525b;
-}
-
-.gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 56px;
-  align-items: center;
-}
-
-.imageWrap {
-  width: 100%;
-  max-width: 640px;
-}
-
-.image {
-  display: block;
-  width: 100%;
-  height: auto;
+  color: var(--color-text-secondary);
 }
 
 .backArea {
@@ -85,14 +67,6 @@
 
   .meta {
     margin-top: 12px;
-  }
-
-  .gallery {
-    gap: 32px;
-  }
-
-  .imageWrap {
-    max-width: 100%;
   }
 
   .backArea {

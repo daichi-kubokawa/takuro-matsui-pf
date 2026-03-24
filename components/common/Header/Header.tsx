@@ -149,7 +149,7 @@ export default function Header({ siteTitle, contactEmail }: Props) {
       {/* SP Overlay Menu */}
       {isOpen ? (
         <div className="fixed inset-0 z-50 bg-black/10 backdrop-blur-[2px] lg:hidden">
-          <div className="min-h-screen bg-white/85">
+          <div className="min-h-screen bg-white/95">
             <div className="flex items-center justify-between px-4 py-6">
               <Link
                 href="/"

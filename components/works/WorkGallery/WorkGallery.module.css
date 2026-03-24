@@ -1,0 +1,37 @@
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  align-items: center;
+}
+
+.item {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.2s ease;
+}
+
+.item:hover .image {
+  opacity: 0.94;
+}
+
+@media (max-width: 767px) {
+  .gallery {
+    gap: 32px;
+  }
+
+  .item {
+    max-width: 100%;
+  }
+}

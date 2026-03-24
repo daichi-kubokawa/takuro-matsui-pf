@@ -22,34 +22,34 @@ export default async function Footer() {
     <footer className="mt-24 pb-10">
       <BackToTopButton />
 
-      <div className="px-4 sm:px-6 text-center text-xs sm:text-sm text-neutral-500">
+      <div className="px-4 sm:px-6 text-center text-sm sm:text-[16px] text-[var(--color-text-muted)]">
         <div>{copyrightText}</div>
 
         <div className="mt-3 flex items-center justify-center gap-3">
           {contactHref ? (
             <a
               href={contactHref}
-              className="hover:text-neutral-900 transition-colors"
+              className="text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
             >
               contact
             </a>
           ) : (
-            <span className="text-neutral-400">contact</span>
+            <span className="text-[var(--color-text-muted)]">contact</span>
           )}
 
-          <span className="text-neutral-300">/</span>
+          <span className="text-[var(--color-text-muted)]">/</span>
 
           {instagramHref ? (
             <Link
               href={instagramHref}
               target="_blank"
               rel="noreferrer"
-              className="hover:text-neutral-900 transition-colors"
+              className="text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
             >
               instagram
             </Link>
           ) : (
-            <span className="text-neutral-400">instagram</span>
+            <span className="text-[var(--color-text-muted)]">instagram</span>
           )}
         </div>
       </div>

@@ -67,7 +67,7 @@ export default async function RootLayout({
 
   return (
     <html lang="ja" className={`${inter.variable} ${notoSansJP.variable}`}>
-      <body className="min-h-screen bg-white text-neutral-900 antialiased">
+      <body className="min-h-screen antialiased">
         <div id="top" />
 
         <Header
