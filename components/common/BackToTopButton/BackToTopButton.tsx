@@ -8,7 +8,6 @@ export default function BackToTopButton() {
 
   useEffect(() => {
     const onScroll = () => {
-      // 100px以上スクロールしたら表示
       setVisible(window.scrollY > 100);
     };
 
@@ -21,14 +20,17 @@ export default function BackToTopButton() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <a
-        href="#top"
+      <button
+        type="button"
+        onClick={() => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
         className="flex flex-col items-center gap-1 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
         aria-label="Back to top"
       >
         <KeyboardArrowUpIcon fontSize="small" />
         <span>TOP</span>
-      </a>
+      </button>
     </div>
   );
 }

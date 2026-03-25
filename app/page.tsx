@@ -8,14 +8,12 @@ export default async function Page() {
   const works = await getAllWorks();
 
   return (
-    <main className="px-4 py-10 md:px-12">
+    <main className="min-h-[85vh] px-4 py-10 md:px-12">
+      <PageIntro title="Takuro Matsui" subtitle="illustrator" />
+
       <Suspense fallback={null}>
         <ScrollRestore />
-        <WorksArchive
-          works={works}
-          scope="all"
-          intro={<PageIntro title="Takuro Matsui" subtitle="illustrator" />}
-        />
+        <WorksArchive works={works} scope="all" />
       </Suspense>
     </main>
   );

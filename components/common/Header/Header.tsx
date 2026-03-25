@@ -81,142 +81,168 @@ export default function Header({ siteTitle, contactEmail }: Props) {
   }, [isOpen]);
 
   return (
-    <header
-      className={[
-        "sticky top-0 z-40 w-full bg-white/80 backdrop-blur-[6px]",
-        "transition-transform duration-300",
-        isVisible ? "translate-y-0" : "-translate-y-full",
-      ].join(" ")}
-    >
-      <div className="flex items-center justify-between px-4 py-6 lg:px-6">
-        <Link
-          href="/"
-          className="text-[20px] tracking-wide font-bold lg:text-[22px]"
-        >
-          {siteTitle}
-        </Link>
-
-        {/* PC Navigation */}
-        <nav className="hidden items-center gap-6 text-xs tracking-wide lg:flex lg:text-[18px]">
-          <Link href="/" className={navClass(isActive(pathname, "/"))}>
-            ALL
-          </Link>
-
+    <>
+      <header
+        className={[
+          "sticky top-0 z-40 w-full bg-white/80 backdrop-blur-[6px]",
+          "transition-transform duration-400 ease-out",
+          isVisible ? "translate-y-0" : "-translate-y-full",
+        ].join(" ")}
+      >
+        <div className="flex items-center justify-between px-4 py-6 lg:px-6">
           <Link
-            href="/works"
-            className={navClass(isActive(pathname, "/works"))}
+            href="/"
+            className="text-[20px] tracking-wide font-bold lg:text-[22px]"
           >
-            WORKS
+            {siteTitle}
           </Link>
 
-          <Link
-            href="/original"
-            className={navClass(isActive(pathname, "/original"))}
-          >
-            ORIGINAL
-          </Link>
+          <nav className="hidden items-center gap-6 text-xs tracking-wide lg:flex lg:text-[18px]">
+            <Link href="/" className={navClass(isActive(pathname, "/"))}>
+              ALL
+            </Link>
 
-          <Link
-            href="/about"
-            className={navClass(isActive(pathname, "/about"))}
-          >
-            ABOUT
-          </Link>
-
-          {contactEmail ? (
-            <a
-              href={`mailto:${contactEmail}`}
-              className="transition-opacity hover:opacity-60"
+            <Link
+              href="/works"
+              className={navClass(isActive(pathname, "/works"))}
             >
-              CONTACT
-            </a>
-          ) : (
-            <span className="text-neutral-400">CONTACT</span>
-          )}
-        </nav>
+              WORKS
+            </Link>
 
-        {/* SP Menu Button */}
-        <button
-          type="button"
-          className="inline-flex items-center justify-center lg:hidden"
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isOpen}
-          onClick={() => setIsOpen((prev) => !prev)}
-        >
-          <MenuIcon />
-        </button>
-      </div>
-      {/* SP Overlay Menu */}
-      {isOpen ? (
-        <div className="fixed inset-0 z-50 bg-black/10 backdrop-blur-[2px] lg:hidden">
-          <div className="min-h-screen bg-white/95">
-            <div className="flex items-center justify-between px-4 py-6">
-              <Link
-                href="/"
-                className="text-[20px] font-bold tracking-wide"
-                onClick={() => setIsOpen(false)}
+            <Link
+              href="/original"
+              className={navClass(isActive(pathname, "/original"))}
+            >
+              ORIGINAL
+            </Link>
+
+            <Link
+              href="/about"
+              className={navClass(isActive(pathname, "/about"))}
+            >
+              ABOUT
+            </Link>
+
+            {contactEmail ? (
+              <a
+                href={`mailto:${contactEmail}`}
+                className="transition-opacity hover:opacity-60"
               >
-                {siteTitle}
-              </Link>
+                CONTACT
+              </a>
+            ) : (
+              <span className="text-neutral-400">CONTACT</span>
+            )}
+          </nav>
 
-              <button
-                type="button"
-                aria-label="Close menu"
-                onClick={() => setIsOpen(false)}
-                className="inline-flex items-center justify-center"
-              >
-                <CloseIcon />
-              </button>
-            </div>
+          <button
+            type="button"
+            className="relative inline-flex h-6 w-6 items-center justify-center lg:hidden"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            onClick={() => setIsOpen((prev) => !prev)}
+          >
+            <span
+              className={[
+                "absolute inset-0 inline-flex items-center justify-center transition-all duration-300 ease-out",
+                isOpen ? "rotate-90 opacity-0" : "rotate-0 opacity-100",
+              ].join(" ")}
+            >
+              <MenuIcon />
+            </span>
 
-            <nav className="flex flex-col gap-6 px-4 pt-6 text-base tracking-wide">
-              <Link
-                href="/"
-                className={navClass(isActive(pathname, "/"))}
-                onClick={() => setIsOpen(false)}
-              >
-                ALL
-              </Link>
-
-              <Link
-                href="/works"
-                className={navClass(isActive(pathname, "/works"))}
-                onClick={() => setIsOpen(false)}
-              >
-                WORKS
-              </Link>
-
-              <Link
-                href="/original"
-                className={navClass(isActive(pathname, "/original"))}
-                onClick={() => setIsOpen(false)}
-              >
-                ORIGINAL
-              </Link>
-
-              <Link
-                href="/about"
-                className={navClass(isActive(pathname, "/about"))}
-                onClick={() => setIsOpen(false)}
-              >
-                ABOUT
-              </Link>
-
-              {contactEmail ? (
-                <a
-                  href={`mailto:${contactEmail}`}
-                  className="transition-opacity hover:opacity-60"
-                  onClick={() => setIsOpen(false)}
-                >
-                  CONTACT
-                </a>
-              ) : (
-                <span className="text-neutral-400">CONTACT</span>
-              )}
-            </nav>
-          </div>
+            <span
+              className={[
+                "absolute inset-0 inline-flex items-center justify-center transition-all duration-300 ease-out",
+                isOpen ? "rotate-0 opacity-100" : "-rotate-90 opacity-0",
+              ].join(" ")}
+            >
+              <CloseIcon />
+            </span>
+          </button>
         </div>
-      ) : null}{" "}
-    </header>
+      </header>
+
+      <div
+        className={[
+          "fixed inset-0 z-50 lg:hidden transition-all duration-300 ease-out",
+          isOpen
+            ? "pointer-events-auto bg-black/10 opacity-100 backdrop-blur-[2px]"
+            : "pointer-events-none bg-black/0 opacity-0 backdrop-blur-0",
+        ].join(" ")}
+      >
+        <div
+          className={[
+            "min-h-screen bg-white/95 transition-all duration-300 ease-out",
+            isOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
+          ].join(" ")}
+        >
+          <div className="flex items-center justify-between px-4 py-6">
+            <Link
+              href="/"
+              className="text-[20px] font-bold tracking-wide"
+              onClick={() => setIsOpen(false)}
+            >
+              {siteTitle}
+            </Link>
+
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setIsOpen(false)}
+              className="inline-flex items-center justify-center"
+            >
+              <CloseIcon />
+            </button>
+          </div>
+
+          <nav className="flex flex-col gap-6 px-4 pt-6 text-base tracking-wide">
+            <Link
+              href="/"
+              className={navClass(isActive(pathname, "/"))}
+              onClick={() => setIsOpen(false)}
+            >
+              ALL
+            </Link>
+
+            <Link
+              href="/works"
+              className={navClass(isActive(pathname, "/works"))}
+              onClick={() => setIsOpen(false)}
+            >
+              WORKS
+            </Link>
+
+            <Link
+              href="/original"
+              className={navClass(isActive(pathname, "/original"))}
+              onClick={() => setIsOpen(false)}
+            >
+              ORIGINAL
+            </Link>
+
+            <Link
+              href="/about"
+              className={navClass(isActive(pathname, "/about"))}
+              onClick={() => setIsOpen(false)}
+            >
+              ABOUT
+            </Link>
+
+            {contactEmail ? (
+              <a
+                href={`mailto:${contactEmail}`}
+                className="transition-opacity hover:opacity-60"
+                onClick={() => setIsOpen(false)}
+              >
+                CONTACT
+              </a>
+            ) : (
+              <span className="text-neutral-400">CONTACT</span>
+            )}
+          </nav>
+        </div>
+      </div>
+    </>
   );
 }
