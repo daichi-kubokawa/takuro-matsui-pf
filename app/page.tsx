@@ -9,8 +9,8 @@ export default async function Page() {
 
   return (
     <main className="px-4 py-10 md:px-12">
-      <ScrollRestore />
       <Suspense fallback={null}>
+        <ScrollRestore />
         <WorksArchive
           works={works}
           scope="all"
