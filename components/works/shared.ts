@@ -1,1 +1,1 @@
-export const LAST_WORK_ID_STORAGE_KEY = "last-work-id";
+export const LAST_WORK_SLUG_STORAGE_KEY = "last-work-slug";

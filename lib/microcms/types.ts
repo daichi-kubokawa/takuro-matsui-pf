@@ -21,6 +21,16 @@ export type Tag = {
   isActive?: boolean;
 };
 
+export type WorkCredit = {
+  role: string;
+  name: string;
+};
+
+export type WorkLink = {
+  label: string;
+  url: string;
+};
+
 export type Work = {
   id: string;
   title: string;
@@ -32,9 +42,10 @@ export type Work = {
   images?: MicroCMSImage[];
   clientName?: string;
   clientNameJa?: string;
-  role?: string;
-  roleJa?: string;
+  credits?: WorkCredit[];
   year?: number;
+  links?: WorkLink[];
+  featuredOrder?: number;
   isPublic?: boolean;
   publishedAt?: string;
   createdAt?: string;

@@ -1,12 +1,4 @@
 .root {
-  width: 100%;
-}
-
-.intro {
-  margin-bottom: 24px;
-}
-
-.fadeBlock {
   opacity: 0;
   transform: translateY(12px);
   transition:
@@ -20,16 +12,8 @@
   transform: translateY(0);
 }
 
-.introBlock {
-  transition-delay: 0ms;
-}
-
-.filterBlock {
-  transition-delay: 100ms;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .fadeBlock {
+  .root {
     opacity: 1;
     transform: none;
     transition: none;

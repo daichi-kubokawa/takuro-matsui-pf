@@ -1,6 +1,18 @@
 .root {
   width: 100%;
   scroll-margin-top: 96px;
+
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+  will-change: opacity, transform;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .link {
@@ -11,10 +23,30 @@
 
 .imageWrap {
   width: 100%;
+  overflow: hidden;
 }
 
 .image {
   display: block;
   width: 100%;
   height: auto;
+  transition: transform 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover .image {
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .image {
+    transition: none;
+  }
 }

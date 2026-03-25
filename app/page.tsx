@@ -11,6 +11,7 @@ export default async function Page() {
       <ScrollRestore />
       <WorksArchive
         works={works}
+        scope="all"
         intro={<PageIntro title="Takuro Matsui" subtitle="illustrator" />}
       />
     </main>

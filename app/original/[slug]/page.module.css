@@ -1,9 +1,9 @@
 .root {
-  padding: 40px 16px 0;
+  padding: 16px 16px 0;
 }
 
 @media (min-width: 768px) {
   .root {
-    padding: 56px 48px 0;
+    padding: 24px 48px 0;
   }
 }

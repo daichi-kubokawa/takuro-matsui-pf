@@ -2,19 +2,28 @@
   width: 100%;
 }
 
+.topCloseArea {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .header {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto 40px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 40px;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .title {
-  font-size: clamp(28px, 4vw, 44px);
-  line-height: 1.2;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-size: 32px;
+  line-height: 1.45;
+  font-weight: 700;
   margin: 0;
 }
 
@@ -22,45 +31,154 @@
   margin-top: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  align-items: center;
+  gap: 4px;
+  align-items: flex-start;
 }
 
-.metaRow {
+.clientName {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--color-text-primary);
+}
+
+.credits {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
 }
 
 .credit {
   margin: 0;
-  font-size: clamp(16px, 2vw, 20px);
+  font-size: 18px;
   line-height: 1.6;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
 }
 
-.separator {
-  margin: 0 6px;
-  font-size: clamp(16px, 2vw, 20px);
-  line-height: 1.6;
-  color: var(--color-text-secondary);
+.creditRole,
+.creditDivider,
+.creditName {
+  color: inherit;
 }
 
 .year {
   margin: 0;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 1.6;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
 }
 
-.backArea {
-  margin-top: 40px;
+.linkArea {
+  margin-top: 16px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.externalLink {
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.externalLink:hover {
+  color: var(--color-text-primary);
+}
+
+.linkIcon {
+  font-size: 1em;
+}
+
+.bottomNavArea {
+  width: 100%;
+  max-width: 640px;
+  margin: 40px auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.navLinkPrev {
+  justify-self: start;
+  gap: 8px;
+}
+
+.navLinkNext {
+  justify-self: end;
+  gap: 8px;
+}
+
+.navLink:hover {
+  color: var(--color-text-primary);
+}
+
+.navLabel {
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+}
+
+.navIcon {
+  flex-shrink: 0;
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.navLinkPrev:hover .navIcon {
+  transform: translateX(-2px);
+}
+
+.navLinkNext:hover .navIcon {
+  transform: translateX(2px);
 }
 
 @media (max-width: 767px) {
+  .title {
+    font-size: 20px;
+    line-height: 1.45;
+  }
+
+  .clientName {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  .credit {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .year {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .externalLink {
+    font-size: 14px;
+  }
+
+  .topCloseArea {
+    margin-bottom: 24px;
+  }
+
   .header {
     margin-bottom: 32px;
   }
@@ -69,7 +187,21 @@
     margin-top: 12px;
   }
 
-  .backArea {
+  .linkArea {
+    margin-top: 12px;
+  }
+
+  .bottomNavArea {
     margin-top: 32px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .navLinkPrev {
+    justify-self: start;
+  }
+
+  .navLinkNext {
+    justify-self: end;
   }
 }

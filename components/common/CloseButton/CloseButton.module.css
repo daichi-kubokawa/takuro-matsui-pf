@@ -1,0 +1,43 @@
+.root {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-line-subtle);
+  border-radius: 999px;
+  background: var(--color-bg-base);
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.root:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-text-secondary);
+}
+
+.root:focus-visible {
+  outline: none;
+  color: var(--color-text-primary);
+  border-color: var(--color-text-secondary);
+}
+
+.root :global(svg) {
+  font-size: 20px;
+}
+
+@media (max-width: 767px) {
+  .root {
+    width: 36px;
+    height: 36px;
+  }
+
+  .root :global(svg) {
+    font-size: 18px;
+  }
+}

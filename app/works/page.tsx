@@ -9,7 +9,11 @@ export default async function WorksPage() {
   return (
     <main className="px-4 py-10 md:px-12">
       <ScrollRestore />
-      <WorksArchive works={works} intro={<PageIntro title="WORKS" />} />
+      <WorksArchive
+        works={works}
+        scope="works"
+        intro={<PageIntro title="WORKS" />}
+      />
     </main>
   );
 }

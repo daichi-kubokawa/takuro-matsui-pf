@@ -9,6 +9,8 @@ import styles from "./WorksGrid.module.css";
 
 type Props = {
   works: Work[];
+  scope: "works" | "original" | "all";
+  activeTag: string;
 };
 
 const breakpointColumnsObj = {
@@ -17,7 +19,23 @@ const breakpointColumnsObj = {
   767: 2,
 };
 
-export default function WorksGrid({ works }: Props) {
+function buildDetailHref(
+  baseHref: string,
+  scope: "works" | "original" | "all",
+  activeTag: string,
+) {
+  const params = new URLSearchParams();
+  params.set("scope", scope);
+
+  if (activeTag !== "all") {
+    params.set("tag", activeTag);
+  }
+
+  const query = params.toString();
+  return query ? `${baseHref}?${query}` : baseHref;
+}
+
+export default function WorksGrid({ works, scope, activeTag }: Props) {
   const [leftColumnWorks, rightColumnWorks] = useMemo(() => {
     const left: Work[] = [];
     const right: Work[] = [];
@@ -39,7 +57,10 @@ export default function WorksGrid({ works }: Props) {
         <div className={styles.spColumn}>
           {leftColumnWorks.map((work) => (
             <div key={work.id} className={styles.spItem}>
-              <WorkCard work={work} href={getDetailHref(work)} />
+              <WorkCard
+                work={work}
+                href={buildDetailHref(getDetailHref(work), scope, activeTag)}
+              />
             </div>
           ))}
         </div>
@@ -47,7 +68,10 @@ export default function WorksGrid({ works }: Props) {
         <div className={styles.spColumn}>
           {rightColumnWorks.map((work) => (
             <div key={work.id} className={styles.spItem}>
-              <WorkCard work={work} href={getDetailHref(work)} />
+              <WorkCard
+                work={work}
+                href={buildDetailHref(getDetailHref(work), scope, activeTag)}
+              />
             </div>
           ))}
         </div>
@@ -61,7 +85,10 @@ export default function WorksGrid({ works }: Props) {
         >
           {works.map((work) => (
             <div key={work.id} className={styles.item}>
-              <WorkCard work={work} href={getDetailHref(work)} />
+              <WorkCard
+                work={work}
+                href={buildDetailHref(getDetailHref(work), scope, activeTag)}
+              />
             </div>
           ))}
         </Masonry>

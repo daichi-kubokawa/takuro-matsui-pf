@@ -22,10 +22,6 @@
   transition: opacity 0.2s ease;
 }
 
-.item:hover .image {
-  opacity: 0.94;
-}
-
 @media (max-width: 767px) {
   .gallery {
     gap: 32px;

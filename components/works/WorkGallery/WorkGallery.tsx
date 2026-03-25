@@ -61,7 +61,7 @@ export default function WorkGallery({ images }: Props) {
         controller={{ closeOnBackdropClick: true }}
         counter={{ container: { style: { top: "20px", bottom: "auto" } } }}
         zoom={{
-          maxZoomPixelRatio: 3,
+          maxZoomPixelRatio: 1.2,
           scrollToZoom: true,
           doubleTapDelay: 300,
           doubleClickDelay: 300,
