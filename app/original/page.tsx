@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getWorksByKind } from "@/lib/microcms/works";
 import ScrollRestore from "@/components/works/ScrollRestore/ScrollRestore";
 import WorksArchive from "@/components/works/WorksArchive/WorksArchive";
@@ -9,11 +10,13 @@ export default async function OriginalPage() {
   return (
     <main className="px-4 py-10 md:px-12">
       <ScrollRestore />
-      <WorksArchive
-        works={works}
-        scope="original"
-        intro={<PageIntro title="ORIGINAL" />}
-      />
+      <Suspense fallback={null}>
+        <WorksArchive
+          works={works}
+          scope="original"
+          intro={<PageIntro title="ORIGINAL" />}
+        />
+      </Suspense>
     </main>
   );
 }
