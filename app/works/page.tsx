@@ -15,7 +15,7 @@ export default async function WorksPage() {
 
       <Suspense fallback={null}>
         <ScrollRestore />
-        <WorksArchive works={works} scope="WORKS" />
+        <WorksArchive works={works} scope="works" />
       </Suspense>
     </main>
   );
