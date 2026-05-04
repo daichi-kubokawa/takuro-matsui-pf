@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -39,62 +40,24 @@ function navClass(active: boolean) {
 export default function Header({ siteTitle, contactEmail }: Props) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const lastScrollY = useRef(0);
 
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
-  useEffect(() => {
-    function handleScroll() {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY <= 0) {
-        setIsVisible(true);
-        lastScrollY.current = currentScrollY;
-        return;
-      }
-
-      if (isOpen) {
-        setIsVisible(true);
-        lastScrollY.current = currentScrollY;
-        return;
-      }
-
-      const isScrollingDown = currentScrollY > lastScrollY.current;
-      const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
-
-      if (scrollDelta < 6) return;
-
-      if (isScrollingDown && currentScrollY > 80) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-
-      lastScrollY.current = currentScrollY;
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isOpen]);
-
   return (
     <>
-      <header
-        className={[
-          "sticky top-0 z-40 w-full bg-white/80 backdrop-blur-[6px]",
-          "transition-transform duration-400 ease-out",
-          isVisible ? "translate-y-0" : "-translate-y-full",
-        ].join(" ")}
-      >
-        <div className="flex items-center justify-between px-4 py-6 lg:px-6">
-          <Link
-            href="/"
-            className="text-[20px] tracking-wide font-bold lg:text-[22px]"
-          >
-            {siteTitle}
+      <header className="sticky top-0 z-40 w-full bg-transparent">
+        <div className="flex items-center justify-between px-4 py-4 lg:px-6">
+          <Link href="/" className="flex items-center" aria-label={siteTitle}>
+            <Image
+              src="/top.png"
+              alt={siteTitle}
+              width={2000}
+              height={630}
+              className="h-12 w-auto lg:h-20"
+              priority
+            />
           </Link>
 
           <nav className="hidden items-center gap-6 text-xs tracking-wide lg:flex lg:text-[18px]">
@@ -177,13 +140,21 @@ export default function Header({ siteTitle, contactEmail }: Props) {
             isOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
           ].join(" ")}
         >
-          <div className="flex items-center justify-between px-4 py-6">
+          <div className="flex items-center justify-between px-4 py-4">
             <Link
               href="/"
-              className="text-[20px] font-bold tracking-wide"
+              className="flex items-center"
+              aria-label={siteTitle}
               onClick={() => setIsOpen(false)}
             >
-              {siteTitle}
+              <Image
+                src="/top.png"
+                alt={siteTitle}
+                width={2000}
+                height={630}
+                className="h-12 w-auto"
+                priority
+              />
             </Link>
 
             <button
@@ -196,7 +167,7 @@ export default function Header({ siteTitle, contactEmail }: Props) {
             </button>
           </div>
 
-          <nav className="flex flex-col gap-6 px-4 pt-6 text-base tracking-wide">
+          <nav className="flex flex-col gap-6 px-6 pt-6 text-base tracking-wide">
             <Link
               href="/"
               className={navClass(isActive(pathname, "/"))}

@@ -19,37 +19,37 @@ export default async function Footer() {
   const instagramHref = settings.instagramUrl?.trim();
 
   return (
-    <footer className="mt-24 pb-10">
+    <footer className="mt-24 pt-12 pb-10 bg-[#111] text-[#eaeaea] border-t border-white/10">
       <BackToTopButton />
 
-      <div className="px-4 sm:px-6 text-center text-sm sm:text-[16px] text-[var(--color-text-muted)]">
+      <div className="px-4 sm:px-6 text-center text-sm sm:text-[16px] text-white/60">
         <div>{copyrightText}</div>
 
         <div className="mt-3 flex items-center justify-center gap-3">
           {contactHref ? (
             <a
               href={contactHref}
-              className="text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
+              className="hover:text-white transition-colors"
             >
               contact
             </a>
           ) : (
-            <span className="text-[var(--color-text-muted)]">contact</span>
+            <span>contact</span>
           )}
 
-          <span className="text-[var(--color-text-muted)]">/</span>
+          <span>/</span>
 
           {instagramHref ? (
             <Link
               href={instagramHref}
               target="_blank"
               rel="noreferrer"
-              className="text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
+              className="hover:text-white transition-colors"
             >
               instagram
             </Link>
           ) : (
-            <span className="text-[var(--color-text-muted)]">instagram</span>
+            <span>instagram</span>
           )}
         </div>
       </div>

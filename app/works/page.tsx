@@ -8,12 +8,14 @@ export default async function WorksPage() {
   const works = await getWorksByKind("works");
 
   return (
-    <main className="min-h-[85vh] px-4 py-10 md:px-12">
-      <PageIntro title="WORKS" />
+    <main className="min-h-[85vh] px-4 py-0 lg:px-6">
+      <div className="block lg:hidden">
+        <PageIntro title="WORKS" />
+      </div>
 
       <Suspense fallback={null}>
         <ScrollRestore />
-        <WorksArchive works={works} scope="works" />
+        <WorksArchive works={works} scope="WORKS" />
       </Suspense>
     </main>
   );

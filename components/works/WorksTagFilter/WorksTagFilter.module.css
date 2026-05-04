@@ -82,7 +82,7 @@
   .root {
     flex-wrap: wrap;
     padding: 12px 0;
-    justify-content: center;
+    justify-content: flex-start;
     font-size: 18px;
     column-gap: 28px;
     row-gap: 10px;

@@ -8,8 +8,10 @@ export default async function Page() {
   const works = await getAllWorks();
 
   return (
-    <main className="min-h-[85vh] px-4 py-10 md:px-12">
-      <PageIntro title="Takuro Matsui" subtitle="illustrator" />
+    <main className="min-h-[85vh] px-4 py-0 lg:px-6">
+      <div className="block hidden">
+        <PageIntro title="Takuro Matsui" subtitle="illustrator" />
+      </div>
 
       <Suspense fallback={null}>
         <ScrollRestore />
