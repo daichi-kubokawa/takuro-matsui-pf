@@ -9,7 +9,7 @@ export default async function Page() {
 
   return (
     <main className="min-h-[85vh] px-4 py-0 lg:px-6">
-      <div className="block hidden">
+      <div className="hidden">
         <PageIntro title="Takuro Matsui" subtitle="illustrator" />
       </div>
 

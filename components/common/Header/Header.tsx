@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import { LAST_WORK_SLUG_STORAGE_KEY } from "@/components/works/shared";
 
 type Props = {
   siteTitle: string;
@@ -39,17 +40,33 @@ function navClass(active: boolean) {
 
 export default function Header({ siteTitle, contactEmail }: Props) {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
+  const handleLogoClick = () => {
+    setIsOpen(false);
+    sessionStorage.removeItem(LAST_WORK_SLUG_STORAGE_KEY);
+    router.push("/");
+
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    });
+  };
+
   return (
     <>
       <header className="sticky top-0 z-40 w-full bg-transparent">
         <div className="flex items-center justify-between px-4 py-4 lg:px-6">
-          <Link href="/" className="flex items-center" aria-label={siteTitle}>
+          <button
+            type="button"
+            className="flex items-center"
+            aria-label={siteTitle}
+            onClick={handleLogoClick}
+          >
             <Image
               src="/top.png"
               alt={siteTitle}
@@ -58,7 +75,7 @@ export default function Header({ siteTitle, contactEmail }: Props) {
               className="h-12 w-auto lg:h-20"
               priority
             />
-          </Link>
+          </button>
 
           <nav className="hidden items-center gap-6 text-xs tracking-wide lg:flex lg:text-[18px]">
             <Link href="/" className={navClass(isActive(pathname, "/"))}>
@@ -141,11 +158,11 @@ export default function Header({ siteTitle, contactEmail }: Props) {
           ].join(" ")}
         >
           <div className="flex items-center justify-between px-4 py-4">
-            <Link
-              href="/"
+            <button
+              type="button"
               className="flex items-center"
               aria-label={siteTitle}
-              onClick={() => setIsOpen(false)}
+              onClick={handleLogoClick}
             >
               <Image
                 src="/top.png"
@@ -155,7 +172,7 @@ export default function Header({ siteTitle, contactEmail }: Props) {
                 className="h-12 w-auto"
                 priority
               />
-            </Link>
+            </button>
 
             <button
               type="button"
