@@ -40,18 +40,13 @@ function getWorkDescription(
   detailDescription: string | undefined,
   fallback: string,
 ) {
-  const workDescription = work.description?.replace(/<[^>]*>/g, "").trim();
   const workTitle = getWorkTitle(work);
 
-  return (
-    workDescription ||
-    buildDescription(detailDescription, workTitle) ||
-    fallback
-  );
+  return buildDescription(detailDescription, workTitle) || fallback;
 }
 
 function getWorkImage(work: Work) {
-  return work.thumbnail || work.mainImage || work.images?.[0] || null;
+  return work.thumbnail || work.images?.[0] || null;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
