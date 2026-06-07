@@ -33,6 +33,9 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL("https://takuromatsui.com"),
     title: seoSiteTitle,
     description,
+    verification: {
+      google: "SLFCwQh6uaNDE3TsSK1ucmREDUteSnDSMfQiBSYHdr4",
+    },
     alternates: {
       canonical: "/",
     },
