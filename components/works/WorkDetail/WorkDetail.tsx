@@ -67,7 +67,6 @@ export default function WorkDetail({
           <h1 className={`${styles.title} ${titleFontClass}`}>
             {displayTitle}
           </h1>
-
           {hasMeta ? (
             <div className={styles.meta}>
               {displayClientName ? (
@@ -96,7 +95,6 @@ export default function WorkDetail({
               ) : null}
             </div>
           ) : null}
-
           {hasLinks ? (
             <div className={styles.linkArea}>
               {links.map((link, index) => (
@@ -108,14 +106,11 @@ export default function WorkDetail({
                   className={`${styles.externalLink} font-ja`}
                 >
                   <span>{link.label}</span>
-                  <OpenInNewIcon
-                    fontSize="inherit"
-                    className={styles.linkIcon}
-                  />
+                  <OpenInNewIcon className={styles.linkIcon} />
                 </a>
               ))}
             </div>
-          ) : null}
+          ) : null}{" "}
         </header>
       </FadeInOnScroll>
 

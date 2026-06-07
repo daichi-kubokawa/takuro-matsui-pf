@@ -5,10 +5,10 @@
 .item {
   position: relative;
   padding-left: 1em;
-  line-height: 1.7;
   font-size: 16px;
   line-height: 1.55;
 }
+
 .item::before {
   content: "•";
   position: absolute;
@@ -17,12 +17,24 @@
 }
 
 .link {
-  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  color: var(--color-text-primary);
   text-decoration: none;
+  transition: opacity 0.2s ease;
 }
 
 .link:hover {
-  text-decoration: underline;
+  opacity: 0.6;
+}
+
+.linkIcon {
+  width: 0.94em !important;
+  height: 0.94em !important;
+  font-size: 0.94em !important;
+  flex-shrink: 0;
+  transform: translateY(0.04em);
 }
 
 @media (min-width: 768px) {

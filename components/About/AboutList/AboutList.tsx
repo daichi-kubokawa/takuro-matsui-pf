@@ -1,3 +1,4 @@
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import styles from "./AboutList.module.css";
 
 type BaseItem = {
@@ -13,50 +14,80 @@ type Props = {
   type: "awards" | "clients" | "exhibitions";
 };
 
+function ExternalLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a href={href} target="_blank" rel="noreferrer" className={styles.link}>
+      <span>{children}</span>
+      <OpenInNewIcon fontSize="inherit" className={styles.linkIcon} />
+    </a>
+  );
+}
+
 export default function AboutList({ items, type }: Props) {
   return (
     <ul className={styles.list}>
       {items.map((item, index) => {
         if (type === "clients") {
+          const content = item.name;
+
           return (
             <li
               key={`${item.name}-${index}`}
               className={`${styles.item} font-en`}
             >
-              {item.url ? (
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={styles.link}
-                >
-                  {item.name}
-                </a>
+              {item.url && item.name ? (
+                <ExternalLink href={item.url}>{content}</ExternalLink>
               ) : (
-                item.name
+                content
               )}
             </li>
           );
         }
 
         if (type === "awards") {
+          const content = (
+            <>
+              {item.year} — {item.title}
+            </>
+          );
+
           return (
             <li
               key={`${item.year}-${item.title}-${index}`}
               className={`${styles.item} font-en`}
             >
-              {item.year} — {item.title}
+              {item.url && item.title ? (
+                <ExternalLink href={item.url}>{content}</ExternalLink>
+              ) : (
+                content
+              )}
             </li>
           );
         }
+
+        const content = (
+          <>
+            {item.year} {item.title}
+            {item.place ? `, ${item.place}` : ""}
+          </>
+        );
 
         return (
           <li
             key={`${item.year}-${item.title}-${index}`}
             className={`${styles.item} font-en`}
           >
-            {item.year} {item.title}
-            {item.place ? `, ${item.place}` : ""}
+            {item.url && item.title ? (
+              <ExternalLink href={item.url}>{content}</ExternalLink>
+            ) : (
+              content
+            )}
           </li>
         );
       })}
