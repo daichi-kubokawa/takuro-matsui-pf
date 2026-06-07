@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { LAST_WORK_SLUG_STORAGE_KEY } from "../shared";
 
-const HEADER_OFFSET = 96;
+const HEADER_OFFSET = 200;
 const MAX_WAIT_MS = 4000;
+const SCROLL_RESTORE_EVENT = "work-scroll-restored";
 
 function getVisibleTarget(workSlug: string) {
   const targets = Array.from(
@@ -42,9 +43,11 @@ export default function ScrollRestore() {
       if (timeoutId !== null) {
         window.clearTimeout(timeoutId);
       }
+
       if (observer) {
         observer.disconnect();
       }
+
       window.cancelAnimationFrame(rafId);
     };
 
@@ -56,6 +59,8 @@ export default function ScrollRestore() {
         top: Math.max(top, 0),
         behavior: "auto",
       });
+
+      window.dispatchEvent(new Event(SCROLL_RESTORE_EVENT));
 
       sessionStorage.removeItem(LAST_WORK_SLUG_STORAGE_KEY);
       cleanup();
@@ -79,6 +84,7 @@ export default function ScrollRestore() {
 
     observer = new MutationObserver(() => {
       const target = getVisibleTarget(workSlug);
+
       if (target) {
         scrollToTarget(target);
       }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -13,7 +13,13 @@ type Props = {
   contactEmail?: string | null;
 };
 
-function isActive(pathname: string, href: string) {
+const SCROLL_RESTORE_EVENT = "work-scroll-restored";
+
+function isActive(pathname: string, href: string, scope?: string | null) {
+  if (scope === "all") {
+    return href === "/";
+  }
+
   if (href === "/") return pathname === "/";
 
   if (href === "/works") {
@@ -41,6 +47,9 @@ function navClass(active: boolean) {
 export default function Header({ siteTitle, contactEmail }: Props) {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const scope = searchParams.get("scope");
+
   const [isOpen, setIsOpen] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -48,6 +57,19 @@ export default function Header({ siteTitle, contactEmail }: Props) {
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const handleScrollRestored = () => {
+      setIsNavVisible(true);
+      setLastScrollY(window.scrollY);
+    };
+
+    window.addEventListener(SCROLL_RESTORE_EVENT, handleScrollRestored);
+
+    return () => {
+      window.removeEventListener(SCROLL_RESTORE_EVENT, handleScrollRestored);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -113,27 +135,27 @@ export default function Header({ siteTitle, contactEmail }: Props) {
                 : "-translate-y-4 opacity-0 pointer-events-none",
             ].join(" ")}
           >
-            <Link href="/" className={navClass(isActive(pathname, "/"))}>
+            <Link href="/" className={navClass(isActive(pathname, "/", scope))}>
               ALL
             </Link>
 
             <Link
               href="/works"
-              className={navClass(isActive(pathname, "/works"))}
+              className={navClass(isActive(pathname, "/works", scope))}
             >
               WORKS
             </Link>
 
             <Link
               href="/original"
-              className={navClass(isActive(pathname, "/original"))}
+              className={navClass(isActive(pathname, "/original", scope))}
             >
               ORIGINAL
             </Link>
 
             <Link
               href="/about"
-              className={navClass(isActive(pathname, "/about"))}
+              className={navClass(isActive(pathname, "/about", scope))}
             >
               ABOUT
             </Link>
@@ -222,7 +244,7 @@ export default function Header({ siteTitle, contactEmail }: Props) {
           <nav className="flex flex-col gap-6 px-6 pt-6 text-base tracking-wide">
             <Link
               href="/"
-              className={navClass(isActive(pathname, "/"))}
+              className={navClass(isActive(pathname, "/", scope))}
               onClick={() => setIsOpen(false)}
             >
               ALL
@@ -230,7 +252,7 @@ export default function Header({ siteTitle, contactEmail }: Props) {
 
             <Link
               href="/works"
-              className={navClass(isActive(pathname, "/works"))}
+              className={navClass(isActive(pathname, "/works", scope))}
               onClick={() => setIsOpen(false)}
             >
               WORKS
@@ -238,7 +260,7 @@ export default function Header({ siteTitle, contactEmail }: Props) {
 
             <Link
               href="/original"
-              className={navClass(isActive(pathname, "/original"))}
+              className={navClass(isActive(pathname, "/original", scope))}
               onClick={() => setIsOpen(false)}
             >
               ORIGINAL
@@ -246,7 +268,7 @@ export default function Header({ siteTitle, contactEmail }: Props) {
 
             <Link
               href="/about"
-              className={navClass(isActive(pathname, "/about"))}
+              className={navClass(isActive(pathname, "/about", scope))}
               onClick={() => setIsOpen(false)}
             >
               ABOUT

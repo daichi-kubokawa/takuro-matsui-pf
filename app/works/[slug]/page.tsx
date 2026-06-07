@@ -122,7 +122,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function filterWorksByTag(works: Work[], tag: string) {
   if (!tag || tag === "all") return works;
-  return works.filter((work) => work.tags?.some((t) => t.id === tag));
+
+  return works.filter((work) =>
+    work.tags?.some((t) => t.slug === tag || t.id === tag),
+  );
 }
 
 function getDetailHref(work: Work, scope: string, tag: string) {

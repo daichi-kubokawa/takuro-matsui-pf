@@ -3,12 +3,13 @@ import styles from "./WorksTagFilter.module.css";
 type TagItem = {
   id: string;
   name: string;
+  slug?: string;
 };
 
 type Props = {
   tags: TagItem[];
   activeTag: string;
-  onChange: (tagId: string) => void;
+  onChange: (tagValue: string) => void;
 };
 
 export default function WorksTagFilter({ tags, activeTag, onChange }: Props) {
@@ -25,16 +26,20 @@ export default function WorksTagFilter({ tags, activeTag, onChange }: Props) {
           ALL
         </button>
 
-        {tags.map((tag) => (
-          <button
-            key={tag.id}
-            type="button"
-            onClick={() => onChange(tag.id)}
-            className={activeTag === tag.id ? styles.active : styles.button}
-          >
-            {tag.name}
-          </button>
-        ))}
+        {tags.map((tag) => {
+          const tagValue = tag.slug ?? tag.id;
+
+          return (
+            <button
+              key={tag.id}
+              type="button"
+              onClick={() => onChange(tagValue)}
+              className={activeTag === tagValue ? styles.active : styles.button}
+            >
+              {tag.name}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
