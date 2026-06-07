@@ -59,6 +59,7 @@ export default function WorkCard({ work, href }: Props) {
     >
       <Link
         href={href}
+        scroll={true}
         className={styles.link}
         onClick={() => {
           sessionStorage.setItem(LAST_WORK_SLUG_STORAGE_KEY, work.slug);
