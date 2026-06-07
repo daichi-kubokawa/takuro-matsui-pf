@@ -87,11 +87,18 @@ export type About = {
 export type Settings = {
   id: string;
   siteTitle: string;
+  seoSiteTitle?: string;
+  seoNameText?: string;
   siteSubtitle?: string;
   contactEmail: string;
   instagramUrl?: string;
   copyrightText?: string;
   metaDescription?: string;
+  worksDesc?: string;
+  originalDesc?: string;
+  aboutDesc?: string;
+  worksDetailDesc?: string;
+  originalDetailDesc?: string;
   ogImage?: MicroCMSImage;
   favicon?: MicroCMSImage;
 };

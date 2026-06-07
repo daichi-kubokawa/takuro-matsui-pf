@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
 import {
   getAllWorks,
   getWorkBySlug,
   getWorksByKind,
 } from "@/lib/microcms/works";
+import { getSettings } from "@/lib/microcms/settings";
 import WorkDetail from "@/components/works/WorkDetail/WorkDetail";
 import type { Work } from "@/lib/microcms/types";
 import styles from "./page.module.css";
@@ -16,6 +18,107 @@ type Props = {
     tag?: string;
   }>;
 };
+
+function getWorkTitle(work: Work) {
+  return work.titleJa?.trim() || work.title?.trim() || "";
+}
+
+function buildDescription(baseText: string | undefined, title: string) {
+  const text = baseText?.trim();
+
+  if (!text) return undefined;
+
+  if (title) {
+    return `「${title}」の${text}`;
+  }
+
+  return text;
+}
+
+function getWorkDescription(
+  work: Work,
+  detailDescription: string | undefined,
+  fallback: string,
+) {
+  const workDescription = work.description?.replace(/<[^>]*>/g, "").trim();
+  const workTitle = getWorkTitle(work);
+
+  return (
+    workDescription ||
+    buildDescription(detailDescription, workTitle) ||
+    fallback
+  );
+}
+
+function getWorkImage(work: Work) {
+  return work.thumbnail || work.mainImage || work.images?.[0] || null;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const [work, settings] = await Promise.all([
+    getWorkBySlug(slug),
+    getSettings(),
+  ]);
+
+  const siteTitle = settings.siteTitle?.trim() || "Takuro Matsui";
+
+  if (!work) {
+    return {
+      title: `Not found | ${siteTitle}`,
+      alternates: {
+        canonical: `/works/${slug}`,
+      },
+    };
+  }
+
+  const workTitle = getWorkTitle(work);
+  const title = `${workTitle || "Work"} | ${siteTitle}`;
+  const description = getWorkDescription(
+    work,
+    settings.worksDetailDesc,
+    settings.metaDescription?.trim() || "Illustrator portfolio",
+  );
+
+  const image = getWorkImage(work);
+  const ogImage = image?.url
+    ? [
+        {
+          url: image.url,
+          width: image.width,
+          height: image.height,
+        },
+      ]
+    : settings.ogImage?.url
+      ? [
+          {
+            url: settings.ogImage.url,
+            width: settings.ogImage.width,
+            height: settings.ogImage.height,
+          },
+        ]
+      : undefined;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/works/${work.slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/works/${work.slug}`,
+      images: ogImage,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ogImage?.map((item) => item.url),
+    },
+  };
+}
 
 function filterWorksByTag(works: Work[], tag: string) {
   if (!tag || tag === "all") return works;

@@ -23,12 +23,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
 
   const siteTitle = settings.siteTitle?.trim() || "Takuro Matsui";
+  const seoSiteTitle = settings.seoSiteTitle?.trim() || siteTitle;
   const description =
-    settings.metaDescription?.trim() || "Illustrator portfolio";
+    settings.metaDescription?.trim() ||
+    "Takuro Matsuiのイラストレーションポートフォリオサイト。";
 
   return {
-    title: siteTitle,
+    metadataBase: new URL("https://takuromatsui.com"),
+    title: seoSiteTitle,
     description,
+    alternates: {
+      canonical: "/",
+    },
     icons: settings.favicon?.url
       ? {
           icon: settings.favicon.url,
@@ -37,8 +43,9 @@ export async function generateMetadata(): Promise<Metadata> {
         }
       : undefined,
     openGraph: {
-      title: siteTitle,
+      title: seoSiteTitle,
       description,
+      url: "/",
       images: settings.ogImage?.url
         ? [
             {
@@ -51,7 +58,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: siteTitle,
+      title: seoSiteTitle,
       description,
       images: settings.ogImage?.url ? [settings.ogImage.url] : undefined,
     },

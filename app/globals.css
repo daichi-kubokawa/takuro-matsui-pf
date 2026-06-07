@@ -36,10 +36,12 @@ select {
 
 .font-en {
   font-family: var(--font-en);
+  font-weight: 400;
 }
 
 .font-ja {
   font-family: var(--font-ja);
+  font-weight: 400;
 }
 
 .container-x {
