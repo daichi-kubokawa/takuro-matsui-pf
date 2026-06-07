@@ -23,9 +23,7 @@ export default async function Footer() {
       <BackToTopButton />
 
       <div className="px-4 sm:px-6 text-center text-sm sm:text-[16px] text-white/60">
-        <div>{copyrightText}</div>
-
-        <div className="mt-3 flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center gap-3">
           {contactHref ? (
             <a
               href={contactHref}
@@ -52,6 +50,8 @@ export default async function Footer() {
             <span>instagram</span>
           )}
         </div>
+
+        <div className="mt-3">{copyrightText}</div>
       </div>
     </footer>
   );

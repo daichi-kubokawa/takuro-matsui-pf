@@ -8,15 +8,13 @@ export default function BackToTopButton() {
 
   useEffect(() => {
     const onScroll = () => {
-      setVisible(window.scrollY > 100);
+      setVisible(window.scrollY > 500);
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  if (!visible) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -25,10 +23,18 @@ export default function BackToTopButton() {
         onClick={() => {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
-        className="flex flex-col items-center gap-1 text-xs text-[var(--color-text-muted)] transition-colors"
+        className={[
+          "flex h-11 w-11 items-center justify-center",
+          "bg-black text-white",
+          "transition-opacity duration-300 ease-out",
+          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white",
+          visible
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none",
+        ].join(" ")}
         aria-label="Back to top"
       >
-        <KeyboardArrowUpIcon fontSize="medium" />
+        <KeyboardArrowUpIcon fontSize="large" className="text-white" />
       </button>
     </div>
   );
