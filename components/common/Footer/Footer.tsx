@@ -19,7 +19,7 @@ export default async function Footer() {
   const instagramHref = settings.instagramUrl?.trim();
 
   return (
-    <footer className="mt-24 pt-12 pb-10 bg-[#111] text-[#eaeaea] border-t border-white/10">
+    <footer className="mt-24 pt-12 pb-10 bg-[#000] text-[#eaeaea] border-t border-white/10">
       <BackToTopButton />
 
       <div className="px-4 sm:px-6 text-center text-sm sm:text-[16px] text-white/60">

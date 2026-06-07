@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import KeyboardArrowUpIcon from "@mui/icons-material/ArrowUpward";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 export default function BackToTopButton() {
   const [visible, setVisible] = useState(false);
@@ -25,11 +25,10 @@ export default function BackToTopButton() {
         onClick={() => {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
-        className="flex flex-col items-center gap-1 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
+        className="flex flex-col items-center gap-1 text-xs text-[var(--color-text-muted)] transition-colors"
         aria-label="Back to top"
       >
-        <KeyboardArrowUpIcon fontSize="small" />
-        <span>TOP</span>
+        <KeyboardArrowUpIcon fontSize="medium" />
       </button>
     </div>
   );

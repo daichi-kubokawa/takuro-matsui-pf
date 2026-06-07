@@ -27,17 +27,17 @@
 
 .masonryGrid {
   display: flex;
-  margin-left: -24px;
+  margin-left: -16px;
   width: auto;
 }
 
 .masonryColumn {
-  padding-left: 24px;
+  padding-left: 16px;
   background-clip: padding-box;
 }
 
 .item {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 @media (min-width: 768px) {

@@ -34,7 +34,7 @@ function isActive(pathname: string, href: string) {
 function navClass(active: boolean) {
   return [
     "transition-opacity hover:opacity-60",
-    active ? "font-bold underline underline-offset-4" : "font-normal",
+    active ? "font-bold text-[var(--color-text-selected)]" : "",
   ].join(" ");
 }
 
@@ -42,10 +42,38 @@ export default function Header({ siteTitle, contactEmail }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isNavVisible, setIsNavVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < 40) {
+        setIsNavVisible(true);
+        setLastScrollY(currentScrollY);
+        return;
+      }
+
+      if (currentScrollY > lastScrollY) {
+        setIsNavVisible(false);
+      } else {
+        setIsNavVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
 
   const handleLogoClick = () => {
     setIsOpen(false);
@@ -77,7 +105,14 @@ export default function Header({ siteTitle, contactEmail }: Props) {
             />
           </button>
 
-          <nav className="hidden items-center gap-6 text-xs tracking-wide lg:flex lg:text-[18px]">
+          <nav
+            className={[
+              "hidden items-center gap-6 text-xs tracking-wide transition-all duration-300 ease-out lg:flex lg:text-[18px]",
+              isNavVisible
+                ? "translate-y-0 opacity-100"
+                : "-translate-y-4 opacity-0 pointer-events-none",
+            ].join(" ")}
+          >
             <Link href="/" className={navClass(isActive(pathname, "/"))}>
               ALL
             </Link>

@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans_JP } from "next/font/google";
+import { Roboto, Noto_Sans_JP } from "next/font/google";
 import Header from "@/components/common/Header/Header";
 import Footer from "@/components/common/Footer/Footer";
 import { getSettings } from "@/lib/microcms/settings";
 
 import "./globals.css";
 
-const inter = Inter({
+const roboto = Roboto({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-roboto",
   display: "swap",
 });
 
@@ -66,7 +67,7 @@ export default async function RootLayout({
   const siteTitle = settings.siteTitle?.trim() || "Takuro Matsui";
 
   return (
-    <html lang="ja" className={`${inter.variable} ${notoSansJP.variable}`}>
+    <html lang="ja" className={`${roboto.variable} ${notoSansJP.variable}`}>
       <body className="min-h-screen antialiased">
         <div id="top" />
 
