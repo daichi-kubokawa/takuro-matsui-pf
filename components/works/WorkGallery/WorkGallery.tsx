@@ -29,7 +29,7 @@ export default function WorkGallery({ images }: Props) {
         .filter((image) => image?.src?.trim())
         .map((image, imageIndex) => ({
           src: image.src!.trim(),
-          alt: image.alt?.trim() || `作品画像 ${imageIndex + 1}`,
+          alt: image.alt?.trim() ?? "",
         })),
     [images],
   );

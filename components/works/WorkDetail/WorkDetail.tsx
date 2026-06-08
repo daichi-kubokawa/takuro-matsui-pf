@@ -31,7 +31,7 @@ export default function WorkDetail({
   prevWork,
   nextWork,
 }: Props) {
-  const displayTitle = work.titleJa?.trim() || work.title?.trim() || "作品";
+  const displayTitle = work.titleJa?.trim() || work.title?.trim() || "";
   const titleFontClass = work.titleJa?.trim() ? "font-ja" : "font-en";
 
   const displayClientName =
@@ -47,6 +47,7 @@ export default function WorkDetail({
     work.links?.filter((link) => link?.label?.trim() && link?.url?.trim()) ??
     [];
 
+  const hasTitle = !!displayTitle;
   const hasMeta = !!displayClientName || credits.length > 0 || !!work.year;
   const hasLinks = links.length > 0;
 
@@ -61,7 +62,7 @@ export default function WorkDetail({
 
         return {
           src,
-          alt: `${displayTitle} ${index + 1}`,
+          alt: displayTitle ? `${displayTitle} ${index + 1}` : "",
         };
       })
       .filter((image): image is GalleryImage => image !== null) ?? [];
@@ -88,9 +89,11 @@ export default function WorkDetail({
 
       <FadeInOnScroll delay={40}>
         <header className={styles.header}>
-          <h1 className={`${styles.title} ${titleFontClass}`}>
-            {displayTitle}
-          </h1>
+          {hasTitle ? (
+            <h1 className={`${styles.title} ${titleFontClass}`}>
+              {displayTitle}
+            </h1>
+          ) : null}
 
           {hasMeta ? (
             <div className={styles.meta}>
