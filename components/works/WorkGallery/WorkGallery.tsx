@@ -11,8 +11,8 @@ import "yet-another-react-lightbox/plugins/counter.css";
 import styles from "./WorkGallery.module.css";
 
 type GalleryImage = {
-  src: string;
-  alt: string;
+  src?: string | null;
+  alt?: string | null;
 };
 
 type Props = {
@@ -23,19 +23,34 @@ export default function WorkGallery({ images }: Props) {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
+  const validImages = useMemo(
+    () =>
+      images
+        .filter((image) => image?.src?.trim())
+        .map((image, imageIndex) => ({
+          src: image.src!.trim(),
+          alt: image.alt?.trim() || `作品画像 ${imageIndex + 1}`,
+        })),
+    [images],
+  );
+
   const slides = useMemo(
     () =>
-      images.map((image) => ({
+      validImages.map((image) => ({
         src: image.src,
         alt: image.alt,
       })),
-    [images],
+    [validImages],
   );
+
+  if (validImages.length === 0) {
+    return null;
+  }
 
   return (
     <>
       <div className={styles.gallery}>
-        {images.map((image, i) => (
+        {validImages.map((image, i) => (
           <button
             key={`${image.src}-${i}`}
             type="button"
@@ -44,7 +59,7 @@ export default function WorkGallery({ images }: Props) {
               setIndex(i);
               setOpen(true);
             }}
-            aria-label={`Open image ${i + 1}`}
+            aria-label={`画像 ${i + 1} を開く`}
           >
             <img src={image.src} alt={image.alt} className={styles.image} />
           </button>

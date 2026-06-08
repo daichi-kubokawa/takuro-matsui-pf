@@ -46,7 +46,11 @@ function getWorkDescription(
 }
 
 function getWorkImage(work: Work) {
-  return work.thumbnail || work.images?.[0] || null;
+  if (work.thumbnail?.url?.trim()) {
+    return work.thumbnail;
+  }
+
+  return work.images?.find((image) => image?.url?.trim()) || null;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

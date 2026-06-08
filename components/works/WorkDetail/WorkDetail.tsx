@@ -20,17 +20,23 @@ type Props = {
   nextWork?: AdjacentWork | null;
 };
 
+type GalleryImage = {
+  src: string;
+  alt: string;
+};
+
 export default function WorkDetail({
   work,
   backHref,
   prevWork,
   nextWork,
 }: Props) {
-  const displayTitle = work.titleJa || work.title;
-  const titleFontClass = work.titleJa ? "font-ja" : "font-en";
+  const displayTitle = work.titleJa?.trim() || work.title?.trim() || "作品";
+  const titleFontClass = work.titleJa?.trim() ? "font-ja" : "font-en";
 
-  const displayClientName = work.clientNameJa || work.clientName;
-  const clientNameFontClass = work.clientNameJa ? "font-ja" : "font-en";
+  const displayClientName =
+    work.clientNameJa?.trim() || work.clientName?.trim();
+  const clientNameFontClass = work.clientNameJa?.trim() ? "font-ja" : "font-en";
 
   const credits =
     work.credits?.filter(
@@ -45,13 +51,31 @@ export default function WorkDetail({
   const hasLinks = links.length > 0;
 
   const galleryImages =
-    work.images && work.images.length > 0
-      ? work.images.map((image, index) => ({
-          src: image.url,
+    work.images
+      ?.map((image, index) => {
+        const src = image?.url?.trim();
+
+        if (!src) {
+          return null;
+        }
+
+        return {
+          src,
           alt: `${displayTitle} ${index + 1}`,
-        }))
-      : work.thumbnail?.url
-        ? [{ src: work.thumbnail.url, alt: displayTitle }]
+        };
+      })
+      .filter((image): image is GalleryImage => image !== null) ?? [];
+
+  const fallbackGalleryImages =
+    galleryImages.length > 0
+      ? galleryImages
+      : work.thumbnail?.url?.trim()
+        ? [
+            {
+              src: work.thumbnail.url.trim(),
+              alt: displayTitle,
+            },
+          ]
         : [];
 
   return (
@@ -67,6 +91,7 @@ export default function WorkDetail({
           <h1 className={`${styles.title} ${titleFontClass}`}>
             {displayTitle}
           </h1>
+
           {hasMeta ? (
             <div className={styles.meta}>
               {displayClientName ? (
@@ -95,6 +120,7 @@ export default function WorkDetail({
               ) : null}
             </div>
           ) : null}
+
           {hasLinks ? (
             <div className={styles.linkArea}>
               {links.map((link, index) => (
@@ -110,13 +136,13 @@ export default function WorkDetail({
                 </a>
               ))}
             </div>
-          ) : null}{" "}
+          ) : null}
         </header>
       </FadeInOnScroll>
 
-      {galleryImages.length > 0 ? (
+      {fallbackGalleryImages.length > 0 ? (
         <FadeInOnScroll delay={80}>
-          <WorkGallery images={galleryImages} />
+          <WorkGallery images={fallbackGalleryImages} />
         </FadeInOnScroll>
       ) : null}
 
