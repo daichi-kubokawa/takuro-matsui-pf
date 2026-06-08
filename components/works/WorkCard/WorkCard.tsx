@@ -60,6 +60,7 @@ export default function WorkCard({ work, href }: Props) {
       <Link
         href={href}
         scroll={true}
+        prefetch={false}
         className={styles.link}
         onClick={() => {
           sessionStorage.setItem(LAST_WORK_SLUG_STORAGE_KEY, work.slug);
@@ -70,8 +71,10 @@ export default function WorkCard({ work, href }: Props) {
             <img
               ref={imgRef}
               src={work.thumbnail.url}
-              alt={work.title}
+              alt={work.title || ""}
               className={styles.image}
+              loading="lazy"
+              decoding="async"
               onLoad={() => setIsImageLoaded(true)}
             />
           </div>
